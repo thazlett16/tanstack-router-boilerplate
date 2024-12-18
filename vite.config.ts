@@ -18,7 +18,18 @@ export default defineConfig({
             routesDirectory: './src/routes',
             semicolons: true,
         }),
-        reactPluginVite({}),
+        reactPluginVite({
+            babel: {
+                plugins: [
+                    [
+                        'babel-plugin-react-compiler',
+                        {
+                            target: '19',
+                        },
+                    ],
+                ],
+            },
+        }),
     ],
     resolve: {
         alias: {
