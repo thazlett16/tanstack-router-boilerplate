@@ -34,6 +34,8 @@ const prettierConfig: Partial<RequiredOptions> = {
     //         }
     //     }
     // ]
+
+    plugins: ['prettier-plugin-tailwindcss'],
 };
 
 export default prettierConfig;
