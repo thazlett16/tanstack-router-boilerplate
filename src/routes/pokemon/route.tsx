@@ -6,9 +6,10 @@ export const Route = createFileRoute('/pokemon')({
 
 function RouteComponent() {
     return (
-        <div>
+        <>
             Hello "/pokemon" Layout!
+            <hr />
             <Outlet />
-        </div>
+        </>
     );
 }

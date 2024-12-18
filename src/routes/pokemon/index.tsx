@@ -26,8 +26,9 @@ function RouteComponent() {
     });
 
     return (
-        <div>
+        <>
             <h3>Hello "/pokemon/"!</h3>
+            <hr />
             {pokemon.map((poke) => (
                 <div key={poke.url}>
                     <Link
@@ -40,7 +41,7 @@ function RouteComponent() {
                     </Link>
                 </div>
             ))}
-        </div>
+        </>
     );
 }
 
