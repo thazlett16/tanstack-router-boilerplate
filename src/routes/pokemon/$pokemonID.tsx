@@ -40,10 +40,11 @@ function RouteComponent() {
     );
 
     return (
-        <div>
+        <>
             Hello "/pokemon/$pokemonID"!
+            <hr />
             <pre>{JSON.stringify(pokemon, null, 2)}</pre>
-        </div>
+        </>
     );
 }
 
@@ -60,7 +61,8 @@ function RouteErrorComponent({ error }: ErrorComponentProps) {
     if (error instanceof DataError) {
         return (
             <>
-                Pokemon not found with ID/Name of: {pokemonID}...{' '}
+                Pokemon not found with ID/Name of: {pokemonID}...
+                <hr />
                 <button
                     onClick={() => {
                         router.invalidate();

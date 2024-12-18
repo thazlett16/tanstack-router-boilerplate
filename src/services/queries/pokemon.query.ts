@@ -7,7 +7,7 @@ import {
 } from '@/services/schemas/pokemon.schema';
 import { DataError } from '@/services/errors/data.error';
 
-const ARTIFICIAL_DELAY = 5 * 1000;
+const ARTIFICIAL_DELAY = 2 * 1000;
 
 export const pokemonListQueryOptions = (query: TNamedAPIResourceQuery) => {
     return queryOptions({
