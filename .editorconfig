@@ -1,0 +1,21 @@
+root = true
+
+[*]
+# Configurable Prettier behaviors. Match these to your project's Prettier config.
+end_of_line = lf
+indent_size = 4
+indent_style = space
+max_line_length = 80
+
+# Non-configurable Prettier behaviors
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+tab_width = 4
+
+[*.md]
+trim_trailing_whitespace = false
+
+# [*.{css,scss,json,yaml,yml,html,md}]
+# # Configurable Prettier behaviors. Match these to your project's Prettier config.
+# indent_size = 2
