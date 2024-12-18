@@ -5,7 +5,7 @@
 
 This example repo setups opinionated defaults to help me start new projects and test new stuff.
 
-## Tech Used
+## Tech included so far
 
 - [Shadcn UI](https://ui.shadcn.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
