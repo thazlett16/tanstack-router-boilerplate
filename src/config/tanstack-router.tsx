@@ -11,25 +11,27 @@ import { queryClient } from '@/config/tanstack-query';
 import { AuthError } from '@/services/errors/auth.error';
 import { DataError } from '@/services/errors/data.error';
 
-export type RouterContext = {
+export interface RouterContext {
     queryClient: QueryClient;
-};
+}
 
 export function createRouter() {
+    const routerContext: RouterContext = {
+        queryClient,
+    };
+
     const router = createTanStackRouter({
         routeTree,
         routeMasks: [],
         search: {
             strict: true,
         },
-        context: {
-            queryClient,
-        },
+        context: routerContext,
         defaultPreload: 'intent',
         defaultPreloadStaleTime: 0,
         defaultPendingMinMs: 500,
         defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
-        defaultPendingComponent: ({}) => <div>Default Pending Component</div>,
+        defaultPendingComponent: ({}) => <>Default Pending Component</>,
         defaultNotFoundComponent: ({}) => <>Default Not Found Component</>,
         Wrap: ({ children }) => {
             return (
