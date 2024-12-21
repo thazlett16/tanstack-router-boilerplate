@@ -10,22 +10,25 @@ import { z } from 'zod';
 import { pokemonByIDQueryOptions } from '@/services/queries/pokemon.query';
 import { DataError } from '@/services/errors/data.error';
 
-const RouteParamsSchema = z.object({
-    pokemonID: z.string().or(z.number()),
-});
-type TRouteParams = z.infer<typeof RouteParamsSchema>;
-
 export const Route = createFileRoute('/pokemon/$pokemonID')({
     params: {
-        parse: RouteParamsSchema.parse,
+        parse: (rawParams) => ({
+            pokemonID: z.string().or(z.number()).parse(rawParams.pokemonID),
+        }),
         stringify: ({ pokemonID }) => ({
             pokemonID: `${pokemonID}`,
         }),
     },
-    loader: async ({ params: { pokemonID }, context: { queryClient } }) => {
-        await queryClient.ensureQueryData(
-            pokemonByIDQueryOptions({ pokemonID: pokemonID }),
-        );
+    loader: async ({
+        preload,
+        params: { pokemonID },
+        context: { queryClient },
+    }) => {
+        if (preload) {
+            queryClient.ensureQueryData(
+                pokemonByIDQueryOptions({ pokemonID: pokemonID }),
+            );
+        }
     },
     component: RouteComponent,
     errorComponent: RouteErrorComponent,

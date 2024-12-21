@@ -1,5 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 
+import { useSuspenseQueryDeferred } from '@/hooks/use-suspense-query-deferred';
 import { apiClient } from '@/services/client';
 import {
     type TPokemonPath,
@@ -30,6 +31,10 @@ export const pokemonListQueryOptions = (query: TNamedAPIResourceQuery) => {
     });
 };
 
+export const usePokemonListQuery = (query: TNamedAPIResourceQuery) => {
+    return useSuspenseQueryDeferred(pokemonListQueryOptions(query));
+};
+
 export const pokemonByIDQueryOptions = (params: TPokemonPath) => {
     return queryOptions({
         queryKey: ['pokemon', 'byID', params],
@@ -56,4 +61,8 @@ export const pokemonByIDQueryOptions = (params: TPokemonPath) => {
             return response.body;
         },
     });
+};
+
+export const usePokemonByIDQuery = (params: TPokemonPath) => {
+    return useSuspenseQueryDeferred(pokemonByIDQueryOptions(params));
 };
