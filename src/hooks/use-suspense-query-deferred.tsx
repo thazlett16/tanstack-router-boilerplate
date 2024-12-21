@@ -8,6 +8,10 @@ import {
 import { useDeepCompareMemo } from 'use-deep-compare';
 import { useSpinDelay } from 'spin-delay';
 
+/**
+ * This hook is modeled after the above blog
+ * https://www.teemutaskula.com/blog/exploring-query-suspense
+ */
 export function useSuspenseQueryDeferred<
     TQueryFnData = unknown,
     TError = DefaultError,

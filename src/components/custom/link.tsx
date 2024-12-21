@@ -1,6 +1,7 @@
-import { type AnchorHTMLAttributes, type ComponentProps } from 'react';
+import { type ComponentProps } from 'react';
 import { createLink, LinkComponent } from '@tanstack/react-router';
 import type { VariantProps } from 'class-variance-authority';
+
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/util/class-name';
 
@@ -11,25 +12,32 @@ type LinkVariantProp = Exclude<
     'default' | 'destructive' | 'secondary' | 'ghost'
 >;
 
-interface BasicLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+//Only using some of the buttonVariants variant options
+interface StyledLinkProps extends ComponentProps<'a'> {
     size?: LinkSizeProp;
     variant?: LinkVariantProp;
 }
 
-const BasicLink = ({
+// Docs show this, but it doesn't have a ref when we remove forwardRef in React19
+// interface StyledLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+//     size?: LinkSizeProp;
+//     variant?: LinkVariantProp;
+// }
+
+const StyledLink = ({
     className,
     variant = 'outline',
     size = 'default',
     ...props
-}: BasicLinkProps) => (
+}: StyledLinkProps) => (
     <a
         className={cn(buttonVariants({ size, variant }), className)}
         {...props}
     />
 );
 
-const CreatedLink = createLink(BasicLink);
+const CreatedLink = createLink(StyledLink);
 
-export const CustomLink: LinkComponent<typeof BasicLink> = ({ ...props }) => (
-    <CreatedLink {...props} />
-);
+export const TanStackLink: LinkComponent<typeof StyledLink> = ({
+    ...props
+}) => <CreatedLink {...props} />;

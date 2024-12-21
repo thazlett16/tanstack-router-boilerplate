@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { pokemonListQueryOptions } from '@/services/queries/pokemon.query';
 import { Button } from '@/components/ui/button';
 import { useSuspenseQueryDeferred } from '@/hooks/use-suspense-query-deferred';
-import { CustomLink } from '@/components/custom/link';
+import { TanStackLink } from '@/components/custom/link';
 
 const LIMIT_DEFAULT = 50;
 const OFFSET_DEFAULT = 0;
@@ -19,11 +19,13 @@ export const Route = createFileRoute('/pokemon/')({
             .parse(rawSearch);
     },
     loaderDeps: ({ search: { limit, offset } }) => ({ limit, offset }),
+    context: () => {},
     loader: async ({
         preload,
         context: { queryClient },
         deps: { limit = LIMIT_DEFAULT, offset = OFFSET_DEFAULT },
     }) => {
+        //TODO Is this the right way for preloading data and using suspense?
         if (preload) {
             queryClient.ensureQueryData(
                 pokemonListQueryOptions({ limit, offset }),
@@ -57,26 +59,28 @@ function RouteComponent() {
         <>
             <h3>Hello "/pokemon/"!</h3>
             <hr />
-            <CustomLink
+            <TanStackLink
                 disabled={pokemonResults.previous === null}
                 from={Route.fullPath}
                 search={(prev) => ({
                     ...prev,
                     offset: offset > 1 ? offset - 1 : undefined,
                 })}
+                variant="link"
             >
                 Previous
-            </CustomLink>
-            <CustomLink
+            </TanStackLink>
+            <TanStackLink
                 disabled={pokemonResults.next === null}
                 from={Route.fullPath}
                 search={(prev) => ({
                     ...prev,
                     offset: offset + 1,
                 })}
+                variant="link"
             >
                 Next
-            </CustomLink>
+            </TanStackLink>
             <Button
                 disabled={pokemonResults.previous === null}
                 onClick={() => {
@@ -104,18 +108,26 @@ function RouteComponent() {
                 Next
             </Button>
             <hr />
-            {isSuspending && <p>Fetching Results...</p>}
-            <hr />
+
+            {isSuspending && (
+                <>
+                    <p>Fetching Results...</p>
+                    <hr />
+                </>
+            )}
+
             {pokemonResults.results.map((poke) => (
                 <div key={poke.url}>
-                    <Link
+                    <TanStackLink
                         to="/pokemon/$pokemonID"
                         params={{
                             pokemonID: poke.name,
                         }}
+                        variant="link"
+                        size="sm"
                     >
                         {poke.name}
-                    </Link>
+                    </TanStackLink>
                 </div>
             ))}
         </>
