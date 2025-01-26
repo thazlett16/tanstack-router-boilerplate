@@ -51,10 +51,7 @@ const ContextMenuSubContent = ({
     />
 );
 
-const ContextMenuContent = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof ContextMenuPrimitive.Content>) => (
+const ContextMenuContent = ({ className, ...props }: ComponentPropsWithRef<typeof ContextMenuPrimitive.Content>) => (
     <ContextMenuPrimitive.Portal>
         <ContextMenuPrimitive.Content
             className={cn(
@@ -135,11 +132,7 @@ const ContextMenuLabel = ({
     inset?: boolean;
 }) => (
     <ContextMenuPrimitive.Label
-        className={cn(
-            'px-2 py-1.5 text-sm font-semibold text-foreground',
-            inset && 'pl-8',
-            className,
-        )}
+        className={cn('px-2 py-1.5 text-sm font-semibold text-foreground', inset && 'pl-8', className)}
         {...props}
     />
 );
@@ -154,16 +147,10 @@ const ContextMenuSeparator = ({
     />
 );
 
-const ContextMenuShortcut = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'span'>) => {
+const ContextMenuShortcut = ({ className, ...props }: ComponentPropsWithRef<'span'>) => {
     return (
         <span
-            className={cn(
-                'ml-auto text-xs tracking-widest text-muted-foreground',
-                className,
-            )}
+            className={cn('ml-auto text-xs tracking-widest text-muted-foreground', className)}
             {...props}
         />
     );

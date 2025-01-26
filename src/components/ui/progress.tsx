@@ -4,16 +4,9 @@ import * as ProgressPrimitive from '@radix-ui/react-progress';
 
 import { cn } from '@/util/class-name';
 
-const Progress = ({
-    className,
-    value,
-    ...props
-}: ComponentPropsWithRef<typeof ProgressPrimitive.Root>) => (
+const Progress = ({ className, value, ...props }: ComponentPropsWithRef<typeof ProgressPrimitive.Root>) => (
     <ProgressPrimitive.Root
-        className={cn(
-            'relative h-4 w-full overflow-hidden rounded-full bg-secondary',
-            className,
-        )}
+        className={cn('relative h-4 w-full overflow-hidden rounded-full bg-secondary', className)}
         {...props}
     >
         <ProgressPrimitive.Indicator

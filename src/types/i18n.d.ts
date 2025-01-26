@@ -1,6 +1,6 @@
 import type { Locale, Messages } from '@/config/i18n';
 
-declare module 'i18next' {
+declare module 'use-intl' {
     interface AppConfig {
         Locale: Locale;
         Messages: Messages;

@@ -7,10 +7,7 @@ import { cn } from '@/util/class-name';
 
 export const Accordion = AccordionPrimitive.Root;
 
-export const AccordionItem = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof AccordionPrimitive.Item>) => (
+export const AccordionItem = ({ className, ...props }: ComponentPropsWithRef<typeof AccordionPrimitive.Item>) => (
     <AccordionPrimitive.Item
         className={cn('border-b', className)}
         {...props}

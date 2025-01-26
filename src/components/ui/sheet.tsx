@@ -6,27 +6,6 @@ import { X } from 'lucide-react';
 
 import { cn } from '@/util/class-name';
 
-export const Sheet = SheetPrimitive.Root;
-
-export const SheetTrigger = SheetPrimitive.Trigger;
-
-export const SheetClose = SheetPrimitive.Close;
-
-export const SheetPortal = SheetPrimitive.Portal;
-
-export const SheetOverlay = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof SheetPrimitive.Overlay>) => (
-    <SheetPrimitive.Overlay
-        className={cn(
-            'fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-            className,
-        )}
-        {...props}
-    />
-);
-
 export const sheetVariants = cva(
     'fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500',
     {
@@ -44,14 +23,32 @@ export const sheetVariants = cva(
     },
 );
 
-export type SheetVariants = VariantProps<typeof sheetVariants>;
+export type TSheetVariants = VariantProps<typeof sheetVariants>;
+
+export const Sheet = SheetPrimitive.Root;
+
+export const SheetTrigger = SheetPrimitive.Trigger;
+
+export const SheetClose = SheetPrimitive.Close;
+
+export const SheetPortal = SheetPrimitive.Portal;
+
+export const SheetOverlay = ({ className, ...props }: ComponentPropsWithRef<typeof SheetPrimitive.Overlay>) => (
+    <SheetPrimitive.Overlay
+        className={cn(
+            'fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+            className,
+        )}
+        {...props}
+    />
+);
 
 export const SheetContent = ({
     side = 'right',
     className,
     children,
     ...props
-}: ComponentPropsWithRef<typeof SheetPrimitive.Content> & SheetVariants) => (
+}: ComponentPropsWithRef<typeof SheetPrimitive.Content> & TSheetVariants) => (
     <SheetPortal>
         <SheetOverlay />
         <SheetPrimitive.Content
@@ -67,46 +64,28 @@ export const SheetContent = ({
     </SheetPortal>
 );
 
-export const SheetHeader = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'div'>) => (
+export const SheetHeader = ({ className, ...props }: ComponentPropsWithRef<'div'>) => (
     <div
-        className={cn(
-            'flex flex-col space-y-2 text-center sm:text-left',
-            className,
-        )}
+        className={cn('flex flex-col space-y-2 text-center sm:text-left', className)}
         {...props}
     />
 );
 
-export const SheetFooter = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'div'>) => (
+export const SheetFooter = ({ className, ...props }: ComponentPropsWithRef<'div'>) => (
     <div
-        className={cn(
-            'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
-            className,
-        )}
+        className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)}
         {...props}
     />
 );
 
-export const SheetTitle = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof SheetPrimitive.Title>) => (
+export const SheetTitle = ({ className, ...props }: ComponentPropsWithRef<typeof SheetPrimitive.Title>) => (
     <SheetPrimitive.Title
         className={cn('text-lg font-semibold text-foreground', className)}
         {...props}
     />
 );
 
-export const SheetDescription = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof SheetPrimitive.Description>) => (
+export const SheetDescription = ({ className, ...props }: ComponentPropsWithRef<typeof SheetPrimitive.Description>) => (
     <SheetPrimitive.Description
         className={cn('text-sm text-muted-foreground', className)}
         {...props}

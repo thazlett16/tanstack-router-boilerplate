@@ -35,10 +35,7 @@ export const SelectScrollUpButton = ({
     ...props
 }: ComponentPropsWithRef<typeof SelectPrimitive.ScrollUpButton>) => (
     <SelectPrimitive.ScrollUpButton
-        className={cn(
-            'flex cursor-default items-center justify-center py-1',
-            className,
-        )}
+        className={cn('flex cursor-default items-center justify-center py-1', className)}
         {...props}
     >
         <ChevronUp className="h-4 w-4" />
@@ -50,10 +47,7 @@ export const SelectScrollDownButton = ({
     ...props
 }: ComponentPropsWithRef<typeof SelectPrimitive.ScrollDownButton>) => (
     <SelectPrimitive.ScrollDownButton
-        className={cn(
-            'flex cursor-default items-center justify-center py-1',
-            className,
-        )}
+        className={cn('flex cursor-default items-center justify-center py-1', className)}
         {...props}
     >
         <ChevronDown className="h-4 w-4" />
@@ -92,21 +86,14 @@ export const SelectContent = ({
     </SelectPrimitive.Portal>
 );
 
-export const SelectLabel = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof SelectPrimitive.Label>) => (
+export const SelectLabel = ({ className, ...props }: ComponentPropsWithRef<typeof SelectPrimitive.Label>) => (
     <SelectPrimitive.Label
         className={cn('py-1.5 pl-8 pr-2 text-sm font-semibold', className)}
         {...props}
     />
 );
 
-export const SelectItem = ({
-    className,
-    children,
-    ...props
-}: ComponentPropsWithRef<typeof SelectPrimitive.Item>) => (
+export const SelectItem = ({ className, children, ...props }: ComponentPropsWithRef<typeof SelectPrimitive.Item>) => (
     <SelectPrimitive.Item
         className={cn(
             'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
@@ -124,10 +111,7 @@ export const SelectItem = ({
     </SelectPrimitive.Item>
 );
 
-export const SelectSeparator = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof SelectPrimitive.Separator>) => (
+export const SelectSeparator = ({ className, ...props }: ComponentPropsWithRef<typeof SelectPrimitive.Separator>) => (
     <SelectPrimitive.Separator
         className={cn('-mx-1 my-1 h-px bg-muted', className)}
         {...props}

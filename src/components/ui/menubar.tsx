@@ -15,23 +15,14 @@ export const MenubarSub = MenubarPrimitive.Sub;
 
 export const MenubarRadioGroup = MenubarPrimitive.RadioGroup;
 
-export const Menubar = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof MenubarPrimitive.Root>) => (
+export const Menubar = ({ className, ...props }: ComponentPropsWithRef<typeof MenubarPrimitive.Root>) => (
     <MenubarPrimitive.Root
-        className={cn(
-            'flex h-10 items-center space-x-1 rounded-md border bg-background p-1',
-            className,
-        )}
+        className={cn('flex h-10 items-center space-x-1 rounded-md border bg-background p-1', className)}
         {...props}
     />
 );
 
-export const MenubarTrigger = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof MenubarPrimitive.Trigger>) => (
+export const MenubarTrigger = ({ className, ...props }: ComponentPropsWithRef<typeof MenubarPrimitive.Trigger>) => (
     <MenubarPrimitive.Trigger
         className={cn(
             'flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
@@ -165,35 +156,22 @@ export const MenubarLabel = ({
     inset?: boolean;
 }) => (
     <MenubarPrimitive.Label
-        className={cn(
-            'px-2 py-1.5 text-sm font-semibold',
-            inset && 'pl-8',
-            className,
-        )}
+        className={cn('px-2 py-1.5 text-sm font-semibold', inset && 'pl-8', className)}
         {...props}
     />
 );
 
-export const MenubarSeparator = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof MenubarPrimitive.Separator>) => (
+export const MenubarSeparator = ({ className, ...props }: ComponentPropsWithRef<typeof MenubarPrimitive.Separator>) => (
     <MenubarPrimitive.Separator
         className={cn('-mx-1 my-1 h-px bg-muted', className)}
         {...props}
     />
 );
 
-export const MenubarShortcut = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'span'>) => {
+export const MenubarShortcut = ({ className, ...props }: ComponentPropsWithRef<'span'>) => {
     return (
         <span
-            className={cn(
-                'ml-auto text-xs tracking-widest text-muted-foreground',
-                className,
-            )}
+            className={cn('ml-auto text-xs tracking-widest text-muted-foreground', className)}
             {...props}
         />
     );

@@ -137,11 +137,7 @@ export const DropdownMenuLabel = ({
     inset?: boolean;
 }) => (
     <DropdownMenuPrimitive.Label
-        className={cn(
-            'px-2 py-1.5 text-sm font-semibold',
-            inset && 'pl-8',
-            className,
-        )}
+        className={cn('px-2 py-1.5 text-sm font-semibold', inset && 'pl-8', className)}
         {...props}
     />
 );
@@ -156,16 +152,10 @@ export const DropdownMenuSeparator = ({
     />
 );
 
-export const DropdownMenuShortcut = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'span'>) => {
+export const DropdownMenuShortcut = ({ className, ...props }: ComponentPropsWithRef<'span'>) => {
     return (
         <span
-            className={cn(
-                'ml-auto text-xs tracking-widest opacity-60',
-                className,
-            )}
+            className={cn('ml-auto text-xs tracking-widest opacity-60', className)}
             {...props}
         />
     );

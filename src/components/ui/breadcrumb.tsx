@@ -11,10 +11,7 @@ export const Breadcrumb = ({ ...props }: ComponentPropsWithRef<'nav'>) => (
     />
 );
 
-export const BreadcrumbList = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'ol'>) => (
+export const BreadcrumbList = ({ className, ...props }: ComponentPropsWithRef<'ol'>) => (
     <ol
         className={cn(
             'flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5',
@@ -24,20 +21,14 @@ export const BreadcrumbList = ({
     />
 );
 
-export const BreadcrumbItem = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'li'>) => (
+export const BreadcrumbItem = ({ className, ...props }: ComponentPropsWithRef<'li'>) => (
     <li
         className={cn('inline-flex items-center gap-1.5', className)}
         {...props}
     />
 );
 
-export const BreadcrumbLink = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'a'>) => {
+export const BreadcrumbLink = ({ className, ...props }: ComponentPropsWithRef<'a'>) => {
     return (
         <a
             className={cn('transition-colors hover:text-foreground', className)}
@@ -46,10 +37,7 @@ export const BreadcrumbLink = ({
     );
 };
 
-export const BreadcrumbPage = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'span'>) => (
+export const BreadcrumbPage = ({ className, ...props }: ComponentPropsWithRef<'span'>) => (
     <span
         role="link"
         aria-disabled="true"
@@ -59,11 +47,7 @@ export const BreadcrumbPage = ({
     />
 );
 
-export const BreadcrumbSeparator = ({
-    children,
-    className,
-    ...props
-}: ComponentPropsWithRef<'li'>) => (
+export const BreadcrumbSeparator = ({ children, className, ...props }: ComponentPropsWithRef<'li'>) => (
     <li
         role="presentation"
         aria-hidden="true"
@@ -74,10 +58,7 @@ export const BreadcrumbSeparator = ({
     </li>
 );
 
-export const BreadcrumbEllipsis = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'span'>) => (
+export const BreadcrumbEllipsis = ({ className, ...props }: ComponentPropsWithRef<'span'>) => (
     <span
         role="presentation"
         aria-hidden="true"

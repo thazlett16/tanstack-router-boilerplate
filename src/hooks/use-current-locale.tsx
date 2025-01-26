@@ -1,6 +1,11 @@
 import { createContext, PropsWithChildren, use, useState } from 'react';
 
-import { type Locale, getLocalStorageLocale, getUserDefaultLocale, setLocalStorageLocale } from '@/config/i18n';
+import {
+    type Locale,
+    getLocalStorageLocale,
+    getUserDefaultLocale,
+    setLocalStorageLocale,
+} from '@/config/i18n';
 
 const LocaleContext = createContext<{
     currentLocale: Locale;
@@ -9,7 +14,7 @@ const LocaleContext = createContext<{
     isUserLocaleDefault: () => boolean;
 } | null>(null);
 
-export const CurrentLocaleProvider = ({ children }: PropsWithChildren) => {
+export const LocaleProvider = ({ children }: PropsWithChildren) => {
     const [currentLocale, _setCurrentLocale] = useState<Locale>(() => {
         const localStorageLocale = getLocalStorageLocale();
         if (localStorageLocale !== null) {
@@ -54,7 +59,9 @@ export const CurrentLocaleProvider = ({ children }: PropsWithChildren) => {
 export const useCurrentLocale = () => {
     const contextValue = use(LocaleContext);
     if (contextValue === null) {
-        throw new Error('useCurrentLocale must be used within a LocaleContextProvider');
+        throw new Error(
+            'useCurrentLocale must be used within a LocaleProvider',
+        );
     }
 
     return contextValue;

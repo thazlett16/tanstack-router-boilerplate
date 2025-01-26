@@ -1,4 +1,4 @@
-const en = {
+const enMessages = {
     languages: {
         english: 'English',
         spanish: 'Spanish',
@@ -11,4 +11,4 @@ const en = {
     },
 };
 
-export default en;
+export default enMessages;

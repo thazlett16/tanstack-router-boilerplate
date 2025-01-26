@@ -13,10 +13,7 @@ export const DialogPortal = DialogPrimitive.Portal;
 
 export const DialogClose = DialogPrimitive.Close;
 
-export const DialogOverlay = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof DialogPrimitive.Overlay>) => (
+export const DialogOverlay = ({ className, ...props }: ComponentPropsWithRef<typeof DialogPrimitive.Overlay>) => (
     <DialogPrimitive.Overlay
         className={cn(
             'fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
@@ -49,42 +46,24 @@ export const DialogContent = ({
     </DialogPortal>
 );
 
-export const DialogHeader = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'div'>) => (
+export const DialogHeader = ({ className, ...props }: ComponentPropsWithRef<'div'>) => (
     <div
-        className={cn(
-            'flex flex-col space-y-1.5 text-center sm:text-left',
-            className,
-        )}
+        className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)}
         {...props}
     />
 );
 
-export const DialogFooter = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'div'>) => (
+export const DialogFooter = ({ className, ...props }: ComponentPropsWithRef<'div'>) => (
     <div
-        className={cn(
-            'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
-            className,
-        )}
+        className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)}
         {...props}
     />
 );
 DialogFooter.displayName = 'DialogFooter';
 
-export const DialogTitle = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof DialogPrimitive.Title>) => (
+export const DialogTitle = ({ className, ...props }: ComponentPropsWithRef<typeof DialogPrimitive.Title>) => (
     <DialogPrimitive.Title
-        className={cn(
-            'text-lg font-semibold leading-none tracking-tight',
-            className,
-        )}
+        className={cn('text-lg font-semibold leading-none tracking-tight', className)}
         {...props}
     />
 );

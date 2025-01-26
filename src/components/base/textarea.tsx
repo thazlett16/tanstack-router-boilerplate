@@ -2,10 +2,7 @@ import { type ComponentPropsWithRef, forwardRef } from 'react';
 
 import { cn } from '@/util/class-name';
 
-export const Textarea = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'textarea'>) => {
+export const Textarea = ({ className, ...props }: ComponentPropsWithRef<'textarea'>) => {
     return (
         <textarea
             className={cn(

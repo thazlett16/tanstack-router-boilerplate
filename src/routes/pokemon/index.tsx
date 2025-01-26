@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 
 import { pokemonListQueryOptions } from '@/services/queries/pokemon.query';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/base/button';
 import { useSuspenseQueryDeferred } from '@/hooks/use-suspense-query-deferred';
 import { TanStackLink } from '@/components/custom/link';
 

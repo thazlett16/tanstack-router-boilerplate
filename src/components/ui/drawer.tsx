@@ -20,10 +20,7 @@ export const DrawerPortal = DrawerPrimitive.Portal;
 
 export const DrawerClose = DrawerPrimitive.Close;
 
-export const DrawerOverlay = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof DrawerPrimitive.Overlay>) => (
+export const DrawerOverlay = ({ className, ...props }: ComponentPropsWithRef<typeof DrawerPrimitive.Overlay>) => (
     <DrawerPrimitive.Overlay
         className={cn('fixed inset-0 z-50 bg-black/80', className)}
         {...props}
@@ -50,35 +47,23 @@ export const DrawerContent = ({
     </DrawerPortal>
 );
 
-export const DrawerHeader = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'div'>) => (
+export const DrawerHeader = ({ className, ...props }: ComponentPropsWithRef<'div'>) => (
     <div
         className={cn('grid gap-1.5 p-4 text-center sm:text-left', className)}
         {...props}
     />
 );
 
-export const DrawerFooter = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<'div'>) => (
+export const DrawerFooter = ({ className, ...props }: ComponentPropsWithRef<'div'>) => (
     <div
         className={cn('mt-auto flex flex-col gap-2 p-4', className)}
         {...props}
     />
 );
 
-export const DrawerTitle = ({
-    className,
-    ...props
-}: ComponentPropsWithRef<typeof DrawerPrimitive.Title>) => (
+export const DrawerTitle = ({ className, ...props }: ComponentPropsWithRef<typeof DrawerPrimitive.Title>) => (
     <DrawerPrimitive.Title
-        className={cn(
-            'text-lg font-semibold leading-none tracking-tight',
-            className,
-        )}
+        className={cn('text-lg font-semibold leading-none tracking-tight', className)}
         {...props}
     />
 );

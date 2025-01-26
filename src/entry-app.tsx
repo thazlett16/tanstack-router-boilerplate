@@ -1,15 +1,18 @@
 import { RouterProvider } from '@tanstack/react-router';
 
 import { createRouter } from '@/config/tanstack-router';
-import { CurrentLocaleProvider, useCurrentLocale } from '@/hooks/use-current-locale';
+import { LocaleProvider, useCurrentLocale } from '@/hooks/use-current-locale';
+import { ThemeProvider } from '@/hooks/use-current-theme';
 
 const router = createRouter();
 
 export default function EntryApp() {
     return (
-        <CurrentLocaleProvider>
-            <InnerApp />
-        </CurrentLocaleProvider>
+        <ThemeProvider>
+            <LocaleProvider>
+                <InnerApp />
+            </LocaleProvider>
+        </ThemeProvider>
     );
 }
 

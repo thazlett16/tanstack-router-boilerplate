@@ -1,39 +1,24 @@
-import {
-    type ComponentPropsWithRef,
-    createContext,
-    type ElementRef,
-    forwardRef,
-    useContext,
-} from 'react';
+import { type ComponentPropsWithRef, createContext, useContext } from 'react';
 
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 
 import { cn } from '@/util/class-name';
-import {
-    toggleVariants,
-    type ToggleVariantsProps,
-} from '@/components/ui/toggle';
+import { toggleVariants, type TToggleVariants } from '@/components/ui/toggle';
 
-const ToggleGroupContext = createContext<ToggleVariantsProps>({
-    size: 'default',
-    variant: 'default',
-});
+const ToggleGroupContext = createContext<TToggleVariants | null>(null);
 
 export const ToggleGroup = ({
     className,
-    variant,
-    size,
+    variant = 'default',
+    size = 'default',
     children,
     ...props
-}: ComponentPropsWithRef<typeof ToggleGroupPrimitive.Root> &
-    ToggleVariantsProps) => (
+}: ComponentPropsWithRef<typeof ToggleGroupPrimitive.Root> & TToggleVariants) => (
     <ToggleGroupPrimitive.Root
         className={cn('flex items-center justify-center gap-1', className)}
         {...props}
     >
-        <ToggleGroupContext.Provider value={{ variant, size }}>
-            {children}
-        </ToggleGroupContext.Provider>
+        <ToggleGroupContext.Provider value={{ variant, size }}>{children}</ToggleGroupContext.Provider>
     </ToggleGroupPrimitive.Root>
 );
 
@@ -43,9 +28,12 @@ export const ToggleGroupItem = ({
     variant,
     size,
     ...props
-}: ComponentPropsWithRef<typeof ToggleGroupPrimitive.Item> &
-    ToggleVariantsProps) => {
+}: ComponentPropsWithRef<typeof ToggleGroupPrimitive.Item> & TToggleVariants) => {
     const context = useContext(ToggleGroupContext);
+
+    if (context === null) {
+        throw new Error('ToggleGroupItem must be used within a ToggleGroup');
+    }
 
     return (
         <ToggleGroupPrimitive.Item
