@@ -1,32 +1,31 @@
 import { type QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import {
-    ErrorComponent,
-    createRouter as createTanStackRouter,
-    isRedirect,
-} from '@tanstack/react-router';
+import { ErrorComponent, createRouter as createTanStackRouter, isRedirect } from '@tanstack/react-router';
 import { ZodError } from 'zod';
 
 import { routeTree } from '@/route-tree.gen';
-import { queryClient } from '@/config/tanstack-query';
+import type { Locale } from '@/config/i18n';
+import { createQueryClient } from '@/config/tanstack-query';
 import { AuthError } from '@/services/errors/auth.error';
 import { DataError } from '@/services/errors/data.error';
 
 export interface RouterContext {
     queryClient: QueryClient;
+    currentLocale: Locale;
 }
 
 export function createRouter() {
-    const routerContext: RouterContext = {
-        queryClient,
-    };
+    const queryClient = createQueryClient();
 
     const router = createTanStackRouter({
         routeTree,
+        context: {
+            queryClient,
+            currentLocale: null!,
+        },
         routeMasks: [],
         search: {
             strict: true,
         },
-        context: routerContext,
         defaultPreload: 'intent',
         defaultPreloadStaleTime: 0,
         defaultPendingMinMs: 500,
@@ -36,9 +35,7 @@ export function createRouter() {
         Wrap: ({ children }) => {
             return (
                 <>
-                    <QueryClientProvider client={queryClient}>
-                        {children}
-                    </QueryClientProvider>
+                    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
                 </>
             );
         },
@@ -103,10 +100,4 @@ export function createRouter() {
     };
 
     return router;
-}
-
-declare module '@tanstack/react-router' {
-    interface Register {
-        router: ReturnType<typeof createRouter>;
-    }
 }

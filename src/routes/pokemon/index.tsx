@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 
 import { pokemonListQueryOptions } from '@/services/queries/pokemon.query';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/base/button';
 import { useSuspenseQueryDeferred } from '@/hooks/use-suspense-query-deferred';
 import { TanStackLink } from '@/components/custom/link';
 
@@ -20,16 +20,10 @@ export const Route = createFileRoute('/pokemon/')({
     },
     loaderDeps: ({ search: { limit, offset } }) => ({ limit, offset }),
     context: () => {},
-    loader: async ({
-        preload,
-        context: { queryClient },
-        deps: { limit = LIMIT_DEFAULT, offset = OFFSET_DEFAULT },
-    }) => {
+    loader: async ({ preload, context: { queryClient }, deps: { limit = LIMIT_DEFAULT, offset = OFFSET_DEFAULT } }) => {
         //TODO Is this the right way for preloading data and using suspense?
         if (preload) {
-            queryClient.ensureQueryData(
-                pokemonListQueryOptions({ limit, offset }),
-            );
+            queryClient.ensureQueryData(pokemonListQueryOptions({ limit, offset }));
         }
     },
     component: RouteComponent,
@@ -37,8 +31,7 @@ export const Route = createFileRoute('/pokemon/')({
 });
 
 function RouteComponent() {
-    const { limit = LIMIT_DEFAULT, offset = OFFSET_DEFAULT } =
-        Route.useSearch();
+    const { limit = LIMIT_DEFAULT, offset = OFFSET_DEFAULT } = Route.useSearch();
     const navigate = useNavigate({ from: Route.fullPath });
 
     const { data: pokemonResults, isSuspending } = useSuspenseQueryDeferred({

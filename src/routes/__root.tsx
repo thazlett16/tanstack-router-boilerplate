@@ -1,3 +1,4 @@
+import type { PropsWithChildren } from 'react';
 import {
     Link,
     Outlet,
@@ -7,14 +8,47 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import type { RouterContext } from '@/config/tanstack-router';
+import { getI18NQueryOptions, useI18NSuspenseQuery } from '@/config/i18n';
+import { createTranslator, IntlProvider } from 'use-intl';
+import { useCurrentLocale } from '@/hooks/use-current-locale';
+import { LocaleToggle } from '@/components/util/locale-toggle';
+import { ThemeToggle } from '@/components/util/theme-toggle';
 
 export const Route = createRootRouteWithContext<RouterContext>()({
+    beforeLoad: async ({ context: { queryClient, currentLocale } }) => {
+        const messages = await queryClient.ensureQueryData(
+            getI18NQueryOptions(currentLocale),
+        );
+
+        const translator = createTranslator({
+            locale: currentLocale,
+            messages,
+        });
+
+        return {
+            translator,
+        };
+    },
     component: RootComponent,
 });
 
+const DocumentIntlProvider = ({ children }: PropsWithChildren) => {
+    const { currentLocale } = useCurrentLocale();
+    const { data: messages } = useI18NSuspenseQuery(currentLocale);
+
+    return (
+        <IntlProvider
+            locale={currentLocale}
+            messages={messages}
+        >
+            {children}
+        </IntlProvider>
+    );
+};
+
 function RootComponent() {
     return (
-        <>
+        <DocumentIntlProvider>
             <Link
                 to="/"
                 activeOptions={{ exact: true }}
@@ -23,6 +57,10 @@ function RootComponent() {
             </Link>
             <hr />
             <Link to="/pokemon">Pokemon</Link>
+            <hr />
+            <LocaleToggle />
+            <hr />
+            <ThemeToggle />
             <hr />
             <Outlet />
             <TanStackRouterDevtools
@@ -34,6 +72,6 @@ function RootComponent() {
                 position="bottom"
                 initialIsOpen={false}
             />
-        </>
+        </DocumentIntlProvider>
     );
 }

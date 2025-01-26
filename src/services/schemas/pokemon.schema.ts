@@ -18,9 +18,7 @@ export const NamedAPIResourceQuerySchema = z.object({
     offset: z.coerce.number().optional(),
     limit: z.coerce.number().optional(),
 });
-export type TNamedAPIResourceQuery = z.infer<
-    typeof NamedAPIResourceQuerySchema
->;
+export type TNamedAPIResourceQuery = z.infer<typeof NamedAPIResourceQuerySchema>;
 
 export const PokemonPathSchema = z.object({
     pokemonID: z.string().or(z.number()),
@@ -44,9 +42,7 @@ export const PokemonHeldItemVersionSchema = z.object({
     version: NamedAPIResourceSchema,
     rarity: z.number(),
 });
-export type TPokemonHeldItemVersion = z.infer<
-    typeof PokemonHeldItemVersionSchema
->;
+export type TPokemonHeldItemVersion = z.infer<typeof PokemonHeldItemVersionSchema>;
 
 export const PokemonHeldItemSchema = z.object({
     item: NamedAPIResourceSchema,

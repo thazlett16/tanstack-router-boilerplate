@@ -1,5 +1,7 @@
-import { type ComponentProps } from 'react';
+import { type ComponentPropsWithRef } from 'react';
+
 import { cva, type VariantProps } from 'class-variance-authority';
+
 import { cn } from '@/util/class-name';
 
 export const buttonVariants = cva(
@@ -7,14 +9,10 @@ export const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default:
-                    'bg-primary text-primary-foreground hover:bg-primary/90',
-                destructive:
-                    'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-                outline:
-                    'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
-                secondary:
-                    'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+                default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+                destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+                outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+                secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
                 ghost: 'hover:bg-accent hover:text-accent-foreground',
                 link: 'text-primary underline-offset-4 hover:underline',
             },
@@ -32,11 +30,9 @@ export const buttonVariants = cva(
     },
 );
 
-export interface ButtonProps
-    extends ComponentProps<'button'>,
-        VariantProps<typeof buttonVariants> {}
+export type TButtonVariants = VariantProps<typeof buttonVariants>;
 
-export const Button = ({ className, variant, size, ...props }: ButtonProps) => (
+export const Button = ({ className, variant, size, ...props }: ComponentPropsWithRef<'button'> & TButtonVariants) => (
     <button
         className={cn(buttonVariants({ variant, size }), className)}
         {...props}

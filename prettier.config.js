@@ -8,7 +8,7 @@ const config = {
     endOfLine: 'lf',
     tabWidth: 4,
     useTabs: false,
-    printWidth: 80,
+    printWidth: 120,
 
     arrowParens: 'always',
     bracketSameLine: false,
