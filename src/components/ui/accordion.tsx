@@ -1,28 +1,27 @@
-import { type ComponentProps } from 'react';
+import { type ComponentPropsWithRef } from 'react';
+
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { ChevronDown } from 'lucide-react';
+
 import { cn } from '@/util/class-name';
 
 export const Accordion = AccordionPrimitive.Root;
 
-interface AccordionItemProps
-    extends ComponentProps<typeof AccordionPrimitive.Item> {}
-
-export const AccordionItem = ({ className, ...props }: AccordionItemProps) => (
+export const AccordionItem = ({
+    className,
+    ...props
+}: ComponentPropsWithRef<typeof AccordionPrimitive.Item>) => (
     <AccordionPrimitive.Item
         className={cn('border-b', className)}
         {...props}
     />
 );
 
-interface AccordionTriggerProps
-    extends ComponentProps<typeof AccordionPrimitive.Trigger> {}
-
 export const AccordionTrigger = ({
     className,
     children,
     ...props
-}: AccordionTriggerProps) => (
+}: ComponentPropsWithRef<typeof AccordionPrimitive.Trigger>) => (
     <AccordionPrimitive.Header className="flex">
         <AccordionPrimitive.Trigger
             className={cn(
@@ -37,14 +36,11 @@ export const AccordionTrigger = ({
     </AccordionPrimitive.Header>
 );
 
-interface AccordionContentProps
-    extends ComponentProps<typeof AccordionPrimitive.Content> {}
-
 export const AccordionContent = ({
     className,
     children,
     ...props
-}: AccordionContentProps) => (
+}: ComponentPropsWithRef<typeof AccordionPrimitive.Content>) => (
     <AccordionPrimitive.Content
         className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm transition-all"
         {...props}

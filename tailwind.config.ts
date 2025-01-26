@@ -16,10 +16,5 @@ export default {
     theme: {
         extend: {},
     },
-    plugins: [
-        aspectRatioPlugin,
-        containerQueriesPlugin,
-        formsPlugin,
-        typographyPlugin,
-    ],
+    plugins: [aspectRatioPlugin, containerQueriesPlugin, formsPlugin, typographyPlugin],
 } satisfies Config;

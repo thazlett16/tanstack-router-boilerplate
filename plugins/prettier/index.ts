@@ -3,10 +3,7 @@
 
 import { type RequiredOptions } from 'prettier';
 
-const clashingEditorConfigDefaults: Pick<
-    RequiredOptions,
-    'endOfLine' | 'tabWidth' | 'printWidth' | 'useTabs'
-> = {
+const clashingEditorConfigDefaults: Pick<RequiredOptions, 'endOfLine' | 'tabWidth' | 'printWidth' | 'useTabs'> = {
     endOfLine: 'lf',
     tabWidth: 4,
     useTabs: false,

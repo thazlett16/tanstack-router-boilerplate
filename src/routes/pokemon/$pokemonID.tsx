@@ -17,16 +17,10 @@ export const Route = createFileRoute('/pokemon/$pokemonID')({
             pokemonID: `${pokemonID}`,
         }),
     },
-    loader: async ({
-        preload,
-        params: { pokemonID },
-        context: { queryClient },
-    }) => {
+    loader: async ({ preload, params: { pokemonID }, context: { queryClient } }) => {
         //TODO Is this the right way for preloading data and using suspense?
         if (preload) {
-            queryClient.ensureQueryData(
-                pokemonByIDQueryOptions({ pokemonID: pokemonID }),
-            );
+            queryClient.ensureQueryData(pokemonByIDQueryOptions({ pokemonID: pokemonID }));
         }
     },
     component: RouteComponent,
@@ -37,9 +31,7 @@ export const Route = createFileRoute('/pokemon/$pokemonID')({
 function RouteComponent() {
     const { pokemonID } = Route.useParams();
 
-    const { data: pokemon, isSuspending } = useSuspenseQueryDeferred(
-        pokemonByIDQueryOptions({ pokemonID }),
-    );
+    const { data: pokemon, isSuspending } = useSuspenseQueryDeferred(pokemonByIDQueryOptions({ pokemonID }));
 
     return (
         <>

@@ -1,7 +1,9 @@
-import { type ComponentProps } from 'react';
+import { type ComponentPropsWithRef } from 'react';
+
 import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
-import { cn } from '@/util/class-name';
+
 import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/util/class-name';
 
 export const AlertDialog = AlertDialogPrimitive.Root;
 
@@ -9,13 +11,10 @@ export const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
 
 export const AlertDialogPortal = AlertDialogPrimitive.Portal;
 
-interface AlertDialogOverlayProps
-    extends ComponentProps<typeof AlertDialogPrimitive.Overlay> {}
-
 export const AlertDialogOverlay = ({
     className,
     ...props
-}: AlertDialogOverlayProps) => (
+}: ComponentPropsWithRef<typeof AlertDialogPrimitive.Overlay>) => (
     <AlertDialogPrimitive.Overlay
         className={cn(
             'fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
@@ -25,13 +24,10 @@ export const AlertDialogOverlay = ({
     />
 );
 
-interface AlertDialogContentProps
-    extends ComponentProps<typeof AlertDialogPrimitive.Content> {}
-
 export const AlertDialogContent = ({
     className,
     ...props
-}: AlertDialogContentProps) => (
+}: ComponentPropsWithRef<typeof AlertDialogPrimitive.Content>) => (
     <AlertDialogPortal>
         <AlertDialogOverlay />
         <AlertDialogPrimitive.Content
@@ -44,12 +40,10 @@ export const AlertDialogContent = ({
     </AlertDialogPortal>
 );
 
-interface AlertDialogHeaderProps extends ComponentProps<'div'> {}
-
 export const AlertDialogHeader = ({
     className,
     ...props
-}: AlertDialogHeaderProps) => (
+}: ComponentPropsWithRef<'div'>) => (
     <div
         className={cn(
             'flex flex-col space-y-2 text-center sm:text-left',
@@ -59,12 +53,10 @@ export const AlertDialogHeader = ({
     />
 );
 
-interface AlertDialogFooterProps extends ComponentProps<'div'> {}
-
 export const AlertDialogFooter = ({
     className,
     ...props
-}: AlertDialogFooterProps) => (
+}: ComponentPropsWithRef<'div'>) => (
     <div
         className={cn(
             'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
@@ -74,52 +66,40 @@ export const AlertDialogFooter = ({
     />
 );
 
-interface AlertDialogTitleProps
-    extends ComponentProps<typeof AlertDialogPrimitive.Title> {}
-
 export const AlertDialogTitle = ({
     className,
     ...props
-}: AlertDialogTitleProps) => (
+}: ComponentPropsWithRef<typeof AlertDialogPrimitive.Title>) => (
     <AlertDialogPrimitive.Title
         className={cn('text-lg font-semibold', className)}
         {...props}
     />
 );
 
-interface AlertDialogDescriptionProps
-    extends ComponentProps<typeof AlertDialogPrimitive.Description> {}
-
 export const AlertDialogDescription = ({
     className,
     ...props
-}: AlertDialogDescriptionProps) => (
+}: ComponentPropsWithRef<typeof AlertDialogPrimitive.Description>) => (
     <AlertDialogPrimitive.Description
         className={cn('text-sm text-muted-foreground', className)}
         {...props}
     />
 );
 
-interface AlertDialogActionProps
-    extends ComponentProps<typeof AlertDialogPrimitive.Action> {}
-
 export const AlertDialogAction = ({
     className,
     ...props
-}: AlertDialogActionProps) => (
+}: ComponentPropsWithRef<typeof AlertDialogPrimitive.Action>) => (
     <AlertDialogPrimitive.Action
         className={cn(buttonVariants(), className)}
         {...props}
     />
 );
 
-interface AlertDialogCancelProps
-    extends ComponentProps<typeof AlertDialogPrimitive.Cancel> {}
-
 export const AlertDialogCancel = ({
     className,
     ...props
-}: AlertDialogCancelProps) => (
+}: ComponentPropsWithRef<typeof AlertDialogPrimitive.Cancel>) => (
     <AlertDialogPrimitive.Cancel
         className={cn(
             buttonVariants({ variant: 'outline' }),

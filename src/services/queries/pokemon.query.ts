@@ -2,10 +2,7 @@ import { queryOptions } from '@tanstack/react-query';
 
 import { useSuspenseQueryDeferred } from '@/hooks/use-suspense-query-deferred';
 import { apiClient } from '@/services/client';
-import {
-    type TPokemonPath,
-    type TNamedAPIResourceQuery,
-} from '@/services/schemas/pokemon.schema';
+import { type TPokemonPath, type TNamedAPIResourceQuery } from '@/services/schemas/pokemon.schema';
 import { DataError } from '@/services/errors/data.error';
 import { NetworkError } from '@/services/errors/network.error';
 
@@ -22,9 +19,7 @@ export const pokemonListQueryOptions = (query: TNamedAPIResourceQuery) => {
                 query,
             });
 
-            const delayPromise = new Promise((r) =>
-                setTimeout(r, ARTIFICIAL_DELAY),
-            );
+            const delayPromise = new Promise((r) => setTimeout(r, ARTIFICIAL_DELAY));
             await delayPromise;
 
             if (response.status !== 200) {
@@ -54,9 +49,7 @@ export const pokemonByIDQueryOptions = (params: TPokemonPath) => {
                 params,
             });
 
-            const delayPromise = new Promise((r) =>
-                setTimeout(r, ARTIFICIAL_DELAY),
-            );
+            const delayPromise = new Promise((r) => setTimeout(r, ARTIFICIAL_DELAY));
             await delayPromise;
 
             if (response.status === 404) {

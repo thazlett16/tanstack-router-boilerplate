@@ -1,5 +1,7 @@
-import { type ComponentProps } from 'react';
+import { type ComponentPropsWithRef } from 'react';
+
 import { cva, type VariantProps } from 'class-variance-authority';
+
 import { cn } from '@/util/class-name';
 
 export const buttonVariants = cva(
@@ -32,11 +34,14 @@ export const buttonVariants = cva(
     },
 );
 
-interface ButtonProps
-    extends ComponentProps<'button'>,
-        VariantProps<typeof buttonVariants> {}
+export type ButtonVariants = VariantProps<typeof buttonVariants>;
 
-export const Button = ({ className, variant, size, ...props }: ButtonProps) => (
+export const Button = ({
+    className,
+    variant,
+    size,
+    ...props
+}: ComponentPropsWithRef<'button'> & ButtonVariants) => (
     <button
         className={cn(buttonVariants({ variant, size }), className)}
         {...props}

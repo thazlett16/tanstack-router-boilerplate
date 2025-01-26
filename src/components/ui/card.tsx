@@ -1,9 +1,8 @@
-import { type ComponentProps } from 'react';
+import { type ComponentPropsWithRef } from 'react';
+
 import { cn } from '@/util/class-name';
 
-interface CardProps extends ComponentProps<'div'> {}
-
-export const Card = ({ className, ...props }: CardProps) => (
+export const Card = ({ className, ...props }: ComponentPropsWithRef<'div'>) => (
     <div
         className={cn(
             'rounded-lg border bg-card text-card-foreground shadow-sm',
@@ -13,18 +12,20 @@ export const Card = ({ className, ...props }: CardProps) => (
     />
 );
 
-interface CardHeaderProps extends ComponentProps<'div'> {}
-
-export const CardHeader = ({ className, ...props }: CardHeaderProps) => (
+export const CardHeader = ({
+    className,
+    ...props
+}: ComponentPropsWithRef<'div'>) => (
     <div
         className={cn('flex flex-col space-y-1.5 p-6', className)}
         {...props}
     />
 );
 
-interface CardTitleProps extends ComponentProps<'div'> {}
-
-export const CardTitle = ({ className, ...props }: CardTitleProps) => (
+export const CardTitle = ({
+    className,
+    ...props
+}: ComponentPropsWithRef<'div'>) => (
     <div
         className={cn(
             'text-2xl font-semibold leading-none tracking-tight',
@@ -34,30 +35,30 @@ export const CardTitle = ({ className, ...props }: CardTitleProps) => (
     />
 );
 
-interface CardDescriptionProps extends ComponentProps<'div'> {}
-
 export const CardDescription = ({
     className,
     ...props
-}: CardDescriptionProps) => (
+}: ComponentPropsWithRef<'div'>) => (
     <div
         className={cn('text-sm text-muted-foreground', className)}
         {...props}
     />
 );
 
-interface CardContentProps extends ComponentProps<'div'> {}
-
-export const CardContent = ({ className, ...props }: CardContentProps) => (
+export const CardContent = ({
+    className,
+    ...props
+}: ComponentPropsWithRef<'div'>) => (
     <div
         className={cn('p-6 pt-0', className)}
         {...props}
     />
 );
 
-interface CardFooterProps extends ComponentProps<'div'> {}
-
-export const CardFooter = ({ className, ...props }: CardFooterProps) => (
+export const CardFooter = ({
+    className,
+    ...props
+}: ComponentPropsWithRef<'div'>) => (
     <div
         className={cn('flex items-center p-6 pt-0', className)}
         {...props}

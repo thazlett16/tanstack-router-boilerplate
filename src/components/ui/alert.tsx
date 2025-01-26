@@ -1,5 +1,7 @@
-import { type ComponentProps } from 'react';
+import { type ComponentPropsWithRef } from 'react';
+
 import { cva, type VariantProps } from 'class-variance-authority';
+
 import { cn } from '@/util/class-name';
 
 const alertVariants = cva(
@@ -18,11 +20,11 @@ const alertVariants = cva(
     },
 );
 
-interface AlertProps
-    extends ComponentProps<'div'>,
-        VariantProps<typeof alertVariants> {}
-
-export const Alert = ({ className, variant, ...props }: AlertProps) => (
+export const Alert = ({
+    className,
+    variant,
+    ...props
+}: ComponentPropsWithRef<'div'> & VariantProps<typeof alertVariants>) => (
     <div
         role="alert"
         className={cn(alertVariants({ variant }), className)}
@@ -30,9 +32,10 @@ export const Alert = ({ className, variant, ...props }: AlertProps) => (
     />
 );
 
-interface AlertTitleProps extends ComponentProps<'h5'> {}
-
-export const AlertTitle = ({ className, ...props }: AlertTitleProps) => (
+export const AlertTitle = ({
+    className,
+    ...props
+}: ComponentPropsWithRef<'h5'>) => (
     <h5
         className={cn(
             'mb-1 font-medium leading-none tracking-tight',
@@ -42,12 +45,10 @@ export const AlertTitle = ({ className, ...props }: AlertTitleProps) => (
     />
 );
 
-interface AlertDescriptionProps extends ComponentProps<'p'> {}
-
 export const AlertDescription = ({
     className,
     ...props
-}: AlertDescriptionProps) => (
+}: ComponentPropsWithRef<'p'>) => (
     <div
         className={cn('text-sm [&_p]:leading-relaxed', className)}
         {...props}

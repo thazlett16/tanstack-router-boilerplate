@@ -2,9 +2,9 @@ import path from 'node:path';
 
 import { defineConfig } from 'vite';
 
-import { default as reactPluginVite } from 'vite-plugin-react';
-import { TanStackRouterVite as tanStackRouterPluginVite } from 'vite-plugin-tanstack-react-router/vite';
 import { default as tsConfigPathsPluginVite } from 'vite-plugin-tsconfig-paths';
+import { default as tanStackRouterPluginVite } from 'vite-plugin-tanstack-react-router/vite';
+import { default as reactPluginVite } from 'vite-plugin-react';
 
 export default defineConfig({
     plugins: [
@@ -14,8 +14,8 @@ export default defineConfig({
         tanStackRouterPluginVite({
             autoCodeSplitting: true,
             generatedRouteTree: './src/route-tree.gen.ts',
-            quoteStyle: 'single',
             routesDirectory: './src/routes',
+            quoteStyle: 'single',
             semicolons: true,
         }),
         reactPluginVite({
@@ -34,6 +34,14 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),
+        },
+    },
+    server: {
+        proxy: {
+            '/api': {
+                target: 'https://pokeapi.co',
+                changeOrigin: true,
+            },
         },
     },
 });

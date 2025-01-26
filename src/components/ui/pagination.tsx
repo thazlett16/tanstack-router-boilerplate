@@ -1,9 +1,11 @@
-import { type ComponentProps, forwardRef } from 'react';
+import { type ComponentPropsWithRef } from 'react';
+
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 import { cn } from '@/util/class-name';
-import { ButtonProps, buttonVariants } from '@/components/ui/button';
 
-const Pagination = ({ className, ...props }: ComponentProps<'nav'>) => (
+import { type ButtonVariants, buttonVariants } from '@/components/ui/button';
+
+const Pagination = ({ className, ...props }: ComponentPropsWithRef<'nav'>) => (
     <nav
         role="navigation"
         aria-label="pagination"
@@ -11,41 +13,31 @@ const Pagination = ({ className, ...props }: ComponentProps<'nav'>) => (
         {...props}
     />
 );
-Pagination.displayName = 'Pagination';
 
-const PaginationContent = forwardRef<HTMLUListElement, ComponentProps<'ul'>>(
-    ({ className, ...props }, ref) => (
-        <ul
-            ref={ref}
-            className={cn('flex flex-row items-center gap-1', className)}
-            {...props}
-        />
-    ),
+const PaginationContent = ({
+    className,
+    ...props
+}: ComponentPropsWithRef<'ul'>) => (
+    <ul
+        className={cn('flex flex-row items-center gap-1', className)}
+        {...props}
+    />
 );
-PaginationContent.displayName = 'PaginationContent';
 
-const PaginationItem = forwardRef<HTMLLIElement, ComponentProps<'li'>>(
-    ({ className, ...props }, ref) => (
-        <li
-            ref={ref}
-            className={cn('', className)}
-            {...props}
-        />
-    ),
+const PaginationItem = ({ ...props }: ComponentPropsWithRef<'li'>) => (
+    <li {...props} />
 );
-PaginationItem.displayName = 'PaginationItem';
-
-type PaginationLinkProps = {
-    isActive?: boolean;
-} & Pick<ButtonProps, 'size'> &
-    ComponentProps<'a'>;
 
 const PaginationLink = ({
     className,
     isActive,
     size = 'icon',
     ...props
-}: PaginationLinkProps) => (
+}: ComponentPropsWithRef<'a'> &
+    ComponentPropsWithRef<'button'> &
+    Pick<ButtonVariants, 'size'> & {
+        isActive?: boolean;
+    }) => (
     <a
         aria-current={isActive ? 'page' : undefined}
         className={cn(
@@ -58,12 +50,11 @@ const PaginationLink = ({
         {...props}
     />
 );
-PaginationLink.displayName = 'PaginationLink';
 
 const PaginationPrevious = ({
     className,
     ...props
-}: ComponentProps<typeof PaginationLink>) => (
+}: ComponentPropsWithRef<typeof PaginationLink>) => (
     <PaginationLink
         aria-label="Go to previous page"
         size="default"
@@ -74,12 +65,11 @@ const PaginationPrevious = ({
         <span>Previous</span>
     </PaginationLink>
 );
-PaginationPrevious.displayName = 'PaginationPrevious';
 
 const PaginationNext = ({
     className,
     ...props
-}: ComponentProps<typeof PaginationLink>) => (
+}: ComponentPropsWithRef<typeof PaginationLink>) => (
     <PaginationLink
         aria-label="Go to next page"
         size="default"
@@ -90,12 +80,11 @@ const PaginationNext = ({
         <ChevronRight className="h-4 w-4" />
     </PaginationLink>
 );
-PaginationNext.displayName = 'PaginationNext';
 
 const PaginationEllipsis = ({
     className,
     ...props
-}: ComponentProps<'span'>) => (
+}: ComponentPropsWithRef<'span'>) => (
     <span
         aria-hidden
         className={cn('flex h-9 w-9 items-center justify-center', className)}
@@ -105,14 +94,3 @@ const PaginationEllipsis = ({
         <span className="sr-only">More pages</span>
     </span>
 );
-PaginationEllipsis.displayName = 'PaginationEllipsis';
-
-export {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-};

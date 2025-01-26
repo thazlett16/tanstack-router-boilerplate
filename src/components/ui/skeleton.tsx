@@ -1,13 +1,15 @@
-import { type HTMLAttributes } from 'react';
+import { type ComponentPropsWithRef } from 'react';
+
 import { cn } from '@/util/class-name';
 
-function Skeleton({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+export const Skeleton = ({
+    className,
+    ...props
+}: ComponentPropsWithRef<'div'>) => {
     return (
         <div
             className={cn('animate-pulse rounded-md bg-muted', className)}
             {...props}
         />
     );
-}
-
-export { Skeleton };
+};

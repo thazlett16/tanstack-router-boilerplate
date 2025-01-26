@@ -10,5 +10,6 @@
         "paths": {
             "@/*": ["./src/*"]
         }
-    }
+    },
+    "include": ["src", "types", "tailwind.config.ts", "vite.config.ts"]
 }

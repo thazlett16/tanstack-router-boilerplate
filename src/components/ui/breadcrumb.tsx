@@ -1,22 +1,20 @@
-import { type ComponentProps } from 'react';
+import { type ComponentPropsWithRef } from 'react';
+
 import { ChevronRight, MoreHorizontal } from 'lucide-react';
+
 import { cn } from '@/util/class-name';
 
-interface BreadcrumbProps extends ComponentProps<'nav'> {}
-
-export const Breadcrumb = ({ ...props }: BreadcrumbProps) => (
+export const Breadcrumb = ({ ...props }: ComponentPropsWithRef<'nav'>) => (
     <nav
         aria-label="breadcrumb"
         {...props}
     />
 );
 
-interface BreadcrumbListProps extends ComponentProps<'ol'> {}
-
 export const BreadcrumbList = ({
     className,
     ...props
-}: BreadcrumbListProps) => (
+}: ComponentPropsWithRef<'ol'>) => (
     <ol
         className={cn(
             'flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5',
@@ -26,24 +24,20 @@ export const BreadcrumbList = ({
     />
 );
 
-interface BreadcrumbItemProps extends ComponentProps<'li'> {}
-
 export const BreadcrumbItem = ({
     className,
     ...props
-}: BreadcrumbItemProps) => (
+}: ComponentPropsWithRef<'li'>) => (
     <li
         className={cn('inline-flex items-center gap-1.5', className)}
         {...props}
     />
 );
 
-interface BreadcrumbLinkProps extends ComponentProps<'a'> {}
-
 export const BreadcrumbLink = ({
     className,
     ...props
-}: BreadcrumbLinkProps) => {
+}: ComponentPropsWithRef<'a'>) => {
     return (
         <a
             className={cn('transition-colors hover:text-foreground', className)}
@@ -52,12 +46,10 @@ export const BreadcrumbLink = ({
     );
 };
 
-interface BreadcrumbPageProps extends ComponentProps<'span'> {}
-
 export const BreadcrumbPage = ({
     className,
     ...props
-}: BreadcrumbPageProps) => (
+}: ComponentPropsWithRef<'span'>) => (
     <span
         role="link"
         aria-disabled="true"
@@ -67,13 +59,11 @@ export const BreadcrumbPage = ({
     />
 );
 
-interface BreadcrumbSeparatorProps extends ComponentProps<'li'> {}
-
 export const BreadcrumbSeparator = ({
     children,
     className,
     ...props
-}: BreadcrumbSeparatorProps) => (
+}: ComponentPropsWithRef<'li'>) => (
     <li
         role="presentation"
         aria-hidden="true"
@@ -84,12 +74,10 @@ export const BreadcrumbSeparator = ({
     </li>
 );
 
-interface BreadcrumbEllipsisProps extends ComponentProps<'span'> {}
-
 export const BreadcrumbEllipsis = ({
     className,
     ...props
-}: BreadcrumbEllipsisProps) => (
+}: ComponentPropsWithRef<'span'>) => (
     <span
         role="presentation"
         aria-hidden="true"
