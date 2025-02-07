@@ -1,7 +1,9 @@
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { fallback } from '@tanstack/react-router-zod-adapter';
+
 import { z } from 'zod';
 
-import { pokemonListQueryOptions } from '@/services/queries/pokemon.query';
+import { pokemonQueries } from '@/services/queries/pokemon.query';
 import { Button } from '@/components/base/button';
 import { useSuspenseQueryDeferred } from '@/hooks/use-suspense-query-deferred';
 import { TanStackLink } from '@/components/custom/link';
@@ -10,32 +12,25 @@ const LIMIT_DEFAULT = 50;
 const OFFSET_DEFAULT = 0;
 
 export const Route = createFileRoute('/pokemon/')({
-    validateSearch: (rawSearch) => {
-        return z
-            .object({
-                limit: z.number().optional().catch(LIMIT_DEFAULT),
-                offset: z.number().optional().catch(OFFSET_DEFAULT),
-            })
-            .parse(rawSearch);
-    },
+    validateSearch: z.object({
+        limit: fallback(z.number(), LIMIT_DEFAULT).default(LIMIT_DEFAULT),
+        offset: fallback(z.number(), OFFSET_DEFAULT).default(OFFSET_DEFAULT),
+    }),
     loaderDeps: ({ search: { limit, offset } }) => ({ limit, offset }),
     context: () => {},
-    loader: async ({ preload, context: { queryClient }, deps: { limit = LIMIT_DEFAULT, offset = OFFSET_DEFAULT } }) => {
-        //TODO Is this the right way for preloading data and using suspense?
-        if (preload) {
-            queryClient.ensureQueryData(pokemonListQueryOptions({ limit, offset }));
-        }
+    loader: ({ context: { queryClient }, deps: { limit, offset } }) => {
+        queryClient.ensureQueryData(pokemonQueries.listQueryOptions({ limit, offset }));
     },
     component: RouteComponent,
     pendingComponent: RoutePendingComponent,
 });
 
 function RouteComponent() {
-    const { limit = LIMIT_DEFAULT, offset = OFFSET_DEFAULT } = Route.useSearch();
+    const { limit, offset } = Route.useSearch();
     const navigate = useNavigate({ from: Route.fullPath });
 
     const { data: pokemonResults, isSuspending } = useSuspenseQueryDeferred({
-        ...pokemonListQueryOptions({ limit, offset }),
+        ...pokemonQueries.listQueryOptions({ limit, offset }),
         select: (data) => {
             const pokemon = data.results.sort((a, b) => {
                 return a.name.localeCompare(b.name);

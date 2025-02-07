@@ -1,76 +1,30 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { useSuspenseQueryDeferred } from '@/hooks/use-suspense-query-deferred';
-import { apiClient } from '@/services/client';
 import { type TPokemonPath, type TNamedAPIResourceQuery } from '@/services/schemas/pokemon.schema';
-import { DataError } from '@/services/errors/data.error';
-import { NetworkError } from '@/services/errors/network.error';
+import { pokemonByIDFetch, pokemonListFetch } from '@/services/fetch/pokemon.fetch';
 
-const ARTIFICIAL_DELAY = 2 * 1000;
-
-export const pokemonListQueryOptions = (query: TNamedAPIResourceQuery) => {
-    return queryOptions({
-        queryKey: ['pokemon', 'list', query],
-        queryFn: async ({ signal }) => {
-            const response = await apiClient.pokemon.getPokemonList({
-                fetchOptions: {
+export const pokemonQueries = {
+    entity: () => ['pokemon'] as const,
+    list: () => [...pokemonQueries.entity(), 'list'] as const,
+    listQueryOptions: (query: TNamedAPIResourceQuery) => {
+        return queryOptions({
+            queryKey: [...pokemonQueries.list(), query] as const,
+            queryFn: async ({ signal }) => {
+                return pokemonListFetch(query, {
                     signal,
-                },
-                query,
-            });
-
-            const delayPromise = new Promise((r) => setTimeout(r, ARTIFICIAL_DELAY));
-            await delayPromise;
-
-            if (response.status !== 200) {
-                throw new NetworkError({
-                    name: 'SYSTEM',
-                    message: 'System error occurred',
                 });
-            }
-
-            return response.body;
-        },
-    });
-};
-
-export const usePokemonListQuery = (query: TNamedAPIResourceQuery) => {
-    return useSuspenseQueryDeferred(pokemonListQueryOptions(query));
-};
-
-export const pokemonByIDQueryOptions = (params: TPokemonPath) => {
-    return queryOptions({
-        queryKey: ['pokemon', 'byID', params],
-        queryFn: async ({ signal }) => {
-            const response = await apiClient.pokemon.getPokemonByID({
-                fetchOptions: {
+            },
+        });
+    },
+    byID: () => [...pokemonQueries.entity(), 'byID'] as const,
+    byIDQueryOptions: (params: TPokemonPath) => {
+        return queryOptions({
+            queryKey: [...pokemonQueries.byID(), params] as const,
+            queryFn: async ({ signal }) => {
+                return pokemonByIDFetch(params, {
                     signal,
-                },
-                params,
-            });
-
-            const delayPromise = new Promise((r) => setTimeout(r, ARTIFICIAL_DELAY));
-            await delayPromise;
-
-            if (response.status === 404) {
-                throw new DataError({
-                    name: 'NOT_FOUND',
-                    message: 'Pokemon Not Found',
                 });
-            }
-
-            if (response.status !== 200) {
-                throw new NetworkError({
-                    name: 'SYSTEM',
-                    message: 'System error occurred',
-                });
-            }
-
-            return response.body;
-        },
-    });
-};
-
-export const usePokemonByIDQuery = (params: TPokemonPath) => {
-    return useSuspenseQueryDeferred(pokemonByIDQueryOptions(params));
+            },
+        });
+    },
 };

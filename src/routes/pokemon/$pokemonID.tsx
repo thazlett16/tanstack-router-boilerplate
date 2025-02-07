@@ -4,7 +4,7 @@ import type { ErrorComponentProps } from '@tanstack/react-router';
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 import { z } from 'zod';
 
-import { pokemonByIDQueryOptions } from '@/services/queries/pokemon.query';
+import { pokemonQueries } from '@/services/queries/pokemon.query';
 import { DataError } from '@/services/errors/data.error';
 import { useSuspenseQueryDeferred } from '@/hooks/use-suspense-query-deferred';
 
@@ -17,11 +17,8 @@ export const Route = createFileRoute('/pokemon/$pokemonID')({
             pokemonID: `${pokemonID}`,
         }),
     },
-    loader: async ({ preload, params: { pokemonID }, context: { queryClient } }) => {
-        //TODO Is this the right way for preloading data and using suspense?
-        if (preload) {
-            queryClient.ensureQueryData(pokemonByIDQueryOptions({ pokemonID: pokemonID }));
-        }
+    loader: ({ params: { pokemonID }, context: { queryClient } }) => {
+        queryClient.ensureQueryData(pokemonQueries.byIDQueryOptions({ pokemonID: pokemonID }));
     },
     component: RouteComponent,
     errorComponent: RouteErrorComponent,
@@ -31,7 +28,7 @@ export const Route = createFileRoute('/pokemon/$pokemonID')({
 function RouteComponent() {
     const { pokemonID } = Route.useParams();
 
-    const { data: pokemon, isSuspending } = useSuspenseQueryDeferred(pokemonByIDQueryOptions({ pokemonID }));
+    const { data: pokemon, isSuspending } = useSuspenseQueryDeferred(pokemonQueries.byIDQueryOptions({ pokemonID }));
 
     return (
         <>
