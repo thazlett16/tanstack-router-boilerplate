@@ -10,6 +10,8 @@
         "serve": "vite preview",
         "test": "vitest",
         "test:ui": "vitest --ui",
+        "e2e": "playwright test",
+        "e2e:ui": "playwright test --ui",
         "prettier": "prettier .",
         "prettier:write": "prettier . --write"
     },
@@ -65,6 +67,7 @@
     },
     "devDependencies": {
         "@faker-js/faker": "^9.4.0",
+        "@playwright/test": "^1.50.1",
         "@testing-library/jest-dom": "^6.6.3",
         "@testing-library/react": "^16.2.0",
         "@testing-library/user-event": "^14.6.1",
