@@ -1,9 +1,9 @@
-import { TNamedAPIResourceQuery, TPokemonPath } from '@/services/schemas/pokemon.schema';
-import { apiClient } from '@/services/client';
-import { NetworkError } from '@/services/errors/network.error';
+import { AuthError } from '@/errors/auth.error';
+import { DataError } from '@/errors/data.error';
+import { NetworkError } from '@/errors/network.error';
+import { apiClient } from '@/services/fetch/client';
 import { delayFn } from '@/services/fetch/util';
-import { AuthError } from '@/services/errors/auth.error';
-import { DataError } from '@/services/errors/data.error';
+import type { TNamedAPIResourceQuery, TPokemonPath } from '@/services/schemas/pokemon.schema';
 
 export const pokemonListFetch = async (
     query: TNamedAPIResourceQuery,

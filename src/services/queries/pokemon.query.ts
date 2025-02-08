@@ -1,7 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { type TPokemonPath, type TNamedAPIResourceQuery } from '@/services/schemas/pokemon.schema';
 import { pokemonByIDFetch, pokemonListFetch } from '@/services/fetch/pokemon.fetch';
+import type { TPokemonPath, TNamedAPIResourceQuery } from '@/services/schemas/pokemon.schema';
 
 export const pokemonQueries = {
     entity: () => ['pokemon'] as const,

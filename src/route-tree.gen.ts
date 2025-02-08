@@ -11,126 +11,184 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root';
-import { Route as PokemonRouteImport } from './routes/pokemon/route';
-import { Route as IndexImport } from './routes/index';
-import { Route as PokemonIndexImport } from './routes/pokemon/index';
-import { Route as PokemonPokemonIDImport } from './routes/pokemon/$pokemonID';
+import { Route as PublicRouteImport } from './routes/_public/route';
+import { Route as PublicIndexImport } from './routes/_public/index';
+import { Route as PublicAboutImport } from './routes/_public/about';
+import { Route as PublicPokemonRouteImport } from './routes/_public/pokemon/route';
+import { Route as PublicPokemonIndexImport } from './routes/_public/pokemon/index';
+import { Route as PublicPokemonPokemonIDImport } from './routes/_public/pokemon/$pokemonID';
 
 // Create/Update Routes
 
-const PokemonRouteRoute = PokemonRouteImport.update({
+const PublicRouteRoute = PublicRouteImport.update({
+  id: '/_public',
+  getParentRoute: () => rootRoute,
+} as any);
+
+const PublicIndexRoute = PublicIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PublicRouteRoute,
+} as any);
+
+const PublicAboutRoute = PublicAboutImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => PublicRouteRoute,
+} as any);
+
+const PublicPokemonRouteRoute = PublicPokemonRouteImport.update({
   id: '/pokemon',
   path: '/pokemon',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => PublicRouteRoute,
 } as any);
 
-const IndexRoute = IndexImport.update({
+const PublicPokemonIndexRoute = PublicPokemonIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => PublicPokemonRouteRoute,
 } as any);
 
-const PokemonIndexRoute = PokemonIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => PokemonRouteRoute,
-} as any);
-
-const PokemonPokemonIDRoute = PokemonPokemonIDImport.update({
+const PublicPokemonPokemonIDRoute = PublicPokemonPokemonIDImport.update({
   id: '/$pokemonID',
   path: '/$pokemonID',
-  getParentRoute: () => PokemonRouteRoute,
+  getParentRoute: () => PublicPokemonRouteRoute,
 } as any);
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/';
-      path: '/';
-      fullPath: '/';
-      preLoaderRoute: typeof IndexImport;
+    '/_public': {
+      id: '/_public';
+      path: '';
+      fullPath: '';
+      preLoaderRoute: typeof PublicRouteImport;
       parentRoute: typeof rootRoute;
     };
-    '/pokemon': {
-      id: '/pokemon';
+    '/_public/pokemon': {
+      id: '/_public/pokemon';
       path: '/pokemon';
       fullPath: '/pokemon';
-      preLoaderRoute: typeof PokemonRouteImport;
-      parentRoute: typeof rootRoute;
+      preLoaderRoute: typeof PublicPokemonRouteImport;
+      parentRoute: typeof PublicRouteImport;
     };
-    '/pokemon/$pokemonID': {
-      id: '/pokemon/$pokemonID';
+    '/_public/about': {
+      id: '/_public/about';
+      path: '/about';
+      fullPath: '/about';
+      preLoaderRoute: typeof PublicAboutImport;
+      parentRoute: typeof PublicRouteImport;
+    };
+    '/_public/': {
+      id: '/_public/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof PublicIndexImport;
+      parentRoute: typeof PublicRouteImport;
+    };
+    '/_public/pokemon/$pokemonID': {
+      id: '/_public/pokemon/$pokemonID';
       path: '/$pokemonID';
       fullPath: '/pokemon/$pokemonID';
-      preLoaderRoute: typeof PokemonPokemonIDImport;
-      parentRoute: typeof PokemonRouteImport;
+      preLoaderRoute: typeof PublicPokemonPokemonIDImport;
+      parentRoute: typeof PublicPokemonRouteImport;
     };
-    '/pokemon/': {
-      id: '/pokemon/';
+    '/_public/pokemon/': {
+      id: '/_public/pokemon/';
       path: '/';
       fullPath: '/pokemon/';
-      preLoaderRoute: typeof PokemonIndexImport;
-      parentRoute: typeof PokemonRouteImport;
+      preLoaderRoute: typeof PublicPokemonIndexImport;
+      parentRoute: typeof PublicPokemonRouteImport;
     };
   }
 }
 
 // Create and export the route tree
 
-interface PokemonRouteRouteChildren {
-  PokemonPokemonIDRoute: typeof PokemonPokemonIDRoute;
-  PokemonIndexRoute: typeof PokemonIndexRoute;
+interface PublicPokemonRouteRouteChildren {
+  PublicPokemonPokemonIDRoute: typeof PublicPokemonPokemonIDRoute;
+  PublicPokemonIndexRoute: typeof PublicPokemonIndexRoute;
 }
 
-const PokemonRouteRouteChildren: PokemonRouteRouteChildren = {
-  PokemonPokemonIDRoute: PokemonPokemonIDRoute,
-  PokemonIndexRoute: PokemonIndexRoute,
+const PublicPokemonRouteRouteChildren: PublicPokemonRouteRouteChildren = {
+  PublicPokemonPokemonIDRoute: PublicPokemonPokemonIDRoute,
+  PublicPokemonIndexRoute: PublicPokemonIndexRoute,
 };
 
-const PokemonRouteRouteWithChildren = PokemonRouteRoute._addFileChildren(
-  PokemonRouteRouteChildren,
+const PublicPokemonRouteRouteWithChildren =
+  PublicPokemonRouteRoute._addFileChildren(PublicPokemonRouteRouteChildren);
+
+interface PublicRouteRouteChildren {
+  PublicPokemonRouteRoute: typeof PublicPokemonRouteRouteWithChildren;
+  PublicAboutRoute: typeof PublicAboutRoute;
+  PublicIndexRoute: typeof PublicIndexRoute;
+}
+
+const PublicRouteRouteChildren: PublicRouteRouteChildren = {
+  PublicPokemonRouteRoute: PublicPokemonRouteRouteWithChildren,
+  PublicAboutRoute: PublicAboutRoute,
+  PublicIndexRoute: PublicIndexRoute,
+};
+
+const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(
+  PublicRouteRouteChildren,
 );
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute;
-  '/pokemon': typeof PokemonRouteRouteWithChildren;
-  '/pokemon/$pokemonID': typeof PokemonPokemonIDRoute;
-  '/pokemon/': typeof PokemonIndexRoute;
+  '': typeof PublicRouteRouteWithChildren;
+  '/pokemon': typeof PublicPokemonRouteRouteWithChildren;
+  '/about': typeof PublicAboutRoute;
+  '/': typeof PublicIndexRoute;
+  '/pokemon/$pokemonID': typeof PublicPokemonPokemonIDRoute;
+  '/pokemon/': typeof PublicPokemonIndexRoute;
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute;
-  '/pokemon/$pokemonID': typeof PokemonPokemonIDRoute;
-  '/pokemon': typeof PokemonIndexRoute;
+  '/about': typeof PublicAboutRoute;
+  '/': typeof PublicIndexRoute;
+  '/pokemon/$pokemonID': typeof PublicPokemonPokemonIDRoute;
+  '/pokemon': typeof PublicPokemonIndexRoute;
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute;
-  '/': typeof IndexRoute;
-  '/pokemon': typeof PokemonRouteRouteWithChildren;
-  '/pokemon/$pokemonID': typeof PokemonPokemonIDRoute;
-  '/pokemon/': typeof PokemonIndexRoute;
+  '/_public': typeof PublicRouteRouteWithChildren;
+  '/_public/pokemon': typeof PublicPokemonRouteRouteWithChildren;
+  '/_public/about': typeof PublicAboutRoute;
+  '/_public/': typeof PublicIndexRoute;
+  '/_public/pokemon/$pokemonID': typeof PublicPokemonPokemonIDRoute;
+  '/_public/pokemon/': typeof PublicPokemonIndexRoute;
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/pokemon' | '/pokemon/$pokemonID' | '/pokemon/';
+  fullPaths:
+    | ''
+    | '/pokemon'
+    | '/about'
+    | '/'
+    | '/pokemon/$pokemonID'
+    | '/pokemon/';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/' | '/pokemon/$pokemonID' | '/pokemon';
-  id: '__root__' | '/' | '/pokemon' | '/pokemon/$pokemonID' | '/pokemon/';
+  to: '/about' | '/' | '/pokemon/$pokemonID' | '/pokemon';
+  id:
+    | '__root__'
+    | '/_public'
+    | '/_public/pokemon'
+    | '/_public/about'
+    | '/_public/'
+    | '/_public/pokemon/$pokemonID'
+    | '/_public/pokemon/';
   fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  PokemonRouteRoute: typeof PokemonRouteRouteWithChildren;
+  PublicRouteRoute: typeof PublicRouteRouteWithChildren;
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  PokemonRouteRoute: PokemonRouteRouteWithChildren,
+  PublicRouteRoute: PublicRouteRouteWithChildren,
 };
 
 export const routeTree = rootRoute
@@ -143,27 +201,40 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/pokemon"
+        "/_public"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/pokemon": {
-      "filePath": "pokemon/route.tsx",
+    "/_public": {
+      "filePath": "_public/route.tsx",
       "children": [
-        "/pokemon/$pokemonID",
-        "/pokemon/"
+        "/_public/pokemon",
+        "/_public/about",
+        "/_public/"
       ]
     },
-    "/pokemon/$pokemonID": {
-      "filePath": "pokemon/$pokemonID.tsx",
-      "parent": "/pokemon"
+    "/_public/pokemon": {
+      "filePath": "_public/pokemon/route.tsx",
+      "parent": "/_public",
+      "children": [
+        "/_public/pokemon/$pokemonID",
+        "/_public/pokemon/"
+      ]
     },
-    "/pokemon/": {
-      "filePath": "pokemon/index.tsx",
-      "parent": "/pokemon"
+    "/_public/about": {
+      "filePath": "_public/about.tsx",
+      "parent": "/_public"
+    },
+    "/_public/": {
+      "filePath": "_public/index.tsx",
+      "parent": "/_public"
+    },
+    "/_public/pokemon/$pokemonID": {
+      "filePath": "_public/pokemon/$pokemonID.tsx",
+      "parent": "/_public/pokemon"
+    },
+    "/_public/pokemon/": {
+      "filePath": "_public/pokemon/index.tsx",
+      "parent": "/_public/pokemon"
     }
   }
 }

@@ -1,12 +1,8 @@
-import { type PropsWithChildren, useState } from 'react';
+import type { PropsWithChildren } from 'react';
+import { useState } from 'react';
 
-import {
-    type Locale,
-    LocaleContext,
-    getLocalStorageLocale,
-    getUserDefaultLocale,
-    setLocalStorageLocale,
-} from '@/config/i18n';
+import type { Locale } from '@/config/i18n';
+import { LocaleContext, getLocalStorageLocale, getUserDefaultLocale, setLocalStorageLocale } from '@/config/i18n';
 
 export const LocaleProvider = ({ children }: PropsWithChildren) => {
     const [currentLocale, _setCurrentLocale] = useState<Locale>(() => {

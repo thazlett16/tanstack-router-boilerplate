@@ -17,6 +17,7 @@ build/
 dist/
 .vinxi/
 .output/
+coverage/
 
 # Debug
 pnpm-debug.log*

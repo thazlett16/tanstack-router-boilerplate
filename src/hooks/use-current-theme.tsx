@@ -1,4 +1,5 @@
 import { use } from 'react';
+
 import { ThemeContext } from '@/config/theme';
 
 export const useCurrentTheme = () => {

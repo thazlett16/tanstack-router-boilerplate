@@ -1,5 +1,8 @@
-import { type PropsWithChildren, useEffect, useState } from 'react';
-import { type Theme, DEFAULT_THEME, ThemeContext, getLocalStorageTheme, setLocalStorageTheme } from '@/config/theme';
+import type { PropsWithChildren } from 'react';
+import { useEffect, useState } from 'react';
+
+import type { Theme } from '@/config/theme';
+import { DEFAULT_THEME, ThemeContext, getLocalStorageTheme, setLocalStorageTheme } from '@/config/theme';
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => {
     const [currentTheme, _setCurrentTheme] = useState<Theme>(() => {

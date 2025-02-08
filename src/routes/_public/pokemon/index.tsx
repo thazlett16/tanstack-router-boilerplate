@@ -1,17 +1,16 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { fallback } from '@tanstack/react-router-zod-adapter';
-
 import { z } from 'zod';
 
-import { pokemonQueries } from '@/services/queries/pokemon.query';
 import { Button } from '@/components/base/button';
-import { useSuspenseQueryDeferred } from '@/hooks/use-suspense-query-deferred';
 import { TanStackLink } from '@/components/custom/link';
+import { useSuspenseQueryDeferred } from '@/hooks/use-suspense-query-deferred';
+import { pokemonQueries } from '@/services/queries/pokemon.query';
 
 const LIMIT_DEFAULT = 50;
 const OFFSET_DEFAULT = 0;
 
-export const Route = createFileRoute('/pokemon/')({
+export const Route = createFileRoute('/_public/pokemon/')({
     validateSearch: z.object({
         limit: fallback(z.number(), LIMIT_DEFAULT).default(LIMIT_DEFAULT),
         offset: fallback(z.number(), OFFSET_DEFAULT).default(OFFSET_DEFAULT),
@@ -45,7 +44,7 @@ function RouteComponent() {
 
     return (
         <>
-            <h3>Hello "/pokemon/"!</h3>
+            <div>Hello "/_public/pokemon/"!</div>
             <hr />
             <TanStackLink
                 disabled={pokemonResults.previous === null}
@@ -123,5 +122,9 @@ function RouteComponent() {
 }
 
 function RoutePendingComponent() {
-    return <>Loading pokemon List...</>;
+    return (
+        <>
+            <div>Pending "/_public/pokemon/"!</div>
+        </>
+    );
 }

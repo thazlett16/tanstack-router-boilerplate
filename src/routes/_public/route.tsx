@@ -1,13 +1,13 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/pokemon')({
+export const Route = createFileRoute('/_public')({
     component: RouteComponent,
 });
 
 function RouteComponent() {
     return (
         <>
-            Hello "/pokemon" Layout!
+            <div>Hello "/_public"!</div>
             <hr />
             <Outlet />
         </>

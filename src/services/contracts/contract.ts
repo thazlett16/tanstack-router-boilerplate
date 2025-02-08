@@ -1,3 +1,3 @@
 import { initContract } from '@ts-rest/core';
 
-export const c = initContract();
+export const contract = initContract();

@@ -1,10 +1,7 @@
 import { useDeferredValue } from 'react';
-import {
-    type DefaultError,
-    type QueryKey,
-    type UseSuspenseQueryOptions,
-    useSuspenseQuery,
-} from '@tanstack/react-query';
+
+import type { DefaultError, QueryKey, UseSuspenseQueryOptions } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useDeepCompareMemo } from 'use-deep-compare';
 import { useSpinDelay } from 'spin-delay';
 

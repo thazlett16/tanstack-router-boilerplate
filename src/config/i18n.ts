@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+
 import { queryOptions } from '@tanstack/react-query';
 import type { LiteralUnion } from 'type-fest';
 import { z } from 'zod';
@@ -70,7 +71,7 @@ export const getI18NQueryOptions = (locale: Locale) => {
         gcTime: 1000 * 60 * 2,
         queryKey: ['i18n', locale],
         queryFn: async () => {
-            return await lazyLoadLocale(locale);
+            return lazyLoadLocale(locale);
         },
     });
 };

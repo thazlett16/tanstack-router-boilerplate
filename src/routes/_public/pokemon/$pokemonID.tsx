@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+
 import type { ErrorComponentProps } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 import { z } from 'zod';
 
-import { pokemonQueries } from '@/services/queries/pokemon.query';
-import { DataError } from '@/services/errors/data.error';
+import { DataError } from '@/errors/data.error';
 import { useSuspenseQueryDeferred } from '@/hooks/use-suspense-query-deferred';
+import { pokemonQueries } from '@/services/queries/pokemon.query';
 
-export const Route = createFileRoute('/pokemon/$pokemonID')({
+export const Route = createFileRoute('/_public/pokemon/$pokemonID')({
     params: {
         parse: (rawParams) => ({
             pokemonID: z.string().or(z.number()).parse(rawParams.pokemonID),
@@ -32,14 +33,16 @@ function RouteComponent() {
 
     return (
         <>
-            Hello "/pokemon/$pokemonID"!
+            <div>Hello "/pokemon/$pokemonID"!</div>
             <hr />
+
             {isSuspending && (
                 <>
                     <p>Fetching Results...</p>
                     <hr />
                 </>
             )}
+
             <pre>{JSON.stringify(pokemon, null, 2)}</pre>
         </>
     );
@@ -58,8 +61,8 @@ function RouteErrorComponent({ error }: ErrorComponentProps) {
     if (error instanceof DataError) {
         return (
             <>
-                Pokemon not found with ID/Name of: {pokemonID}...
-                <hr />
+                <div>Error "/_public/pokemon/$pokemonID"!</div>
+                <p>Pokemon not found with ID/Name of: {pokemonID}...</p>
                 <button
                     onClick={() => {
                         router.invalidate();
@@ -77,5 +80,10 @@ function RouteErrorComponent({ error }: ErrorComponentProps) {
 function RoutePendingComponent() {
     const { pokemonID } = Route.useParams();
 
-    return <>Loading pokemon with ID/Name of: {pokemonID}</>;
+    return (
+        <>
+            <div>Pending "/_public/pokemon/$pokemonID"!</div>
+            <p>Loading pokemon with ID/Name of: {pokemonID}</p>
+        </>
+    );
 }
