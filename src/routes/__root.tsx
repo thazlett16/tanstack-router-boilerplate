@@ -30,6 +30,8 @@ function RootComponent() {
         <I18NProvider>
             <Link to="/">Home</Link>
             <hr />
+            <Link to="/about">About</Link>
+            <hr />
             <Link to="/pokemon">Pokemon</Link>
             <hr />
             <LocaleToggle />
