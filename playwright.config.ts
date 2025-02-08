@@ -11,15 +11,16 @@ export default defineConfig({
 
     reporter: [['line']],
 
-    workers: 1,
-    retries: 0,
+    forbidOnly: !!process.env.CI,
+    retries: process.env.CI ? 2 : 0,
+    workers: process.env.CI ? 1 : undefined,
 
     use: {
         baseURL,
     },
 
     webServer: {
-        command: `VITE_SERVER_PORT=${PORT} pnpm build && VITE_SERVER_PORT=${PORT} pnpm start --port ${PORT}`,
+        command: `VITE_SERVER_PORT=${PORT} pnpm build && VITE_SERVER_PORT=${PORT} pnpm serve --port ${PORT}`,
         url: baseURL,
         reuseExistingServer: !process.env.CI,
         stdout: 'pipe',

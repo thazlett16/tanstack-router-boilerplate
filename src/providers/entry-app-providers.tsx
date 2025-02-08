@@ -8,7 +8,7 @@ import { ThemeProvider } from '@/providers/theme-provider';
 
 const queryClient = createQueryClient();
 
-export const AppEntryProviders = ({ children }: PropsWithChildren) => {
+export const EntryAppProviders = ({ children }: PropsWithChildren) => {
     return (
         <QueryClientProvider client={queryClient}>
             <ThemeProvider>

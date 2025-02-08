@@ -7,6 +7,9 @@ import { default as tanStackRouterPluginVite } from 'vite-plugin-tanstack-react-
 import { default as reactPluginVite } from 'vite-plugin-react';
 
 export default defineConfig({
+    build: {
+        chunkSizeWarningLimit: 800,
+    },
     plugins: [
         tsConfigPathsPluginVite({
             projects: ['./tsconfig.json'],
