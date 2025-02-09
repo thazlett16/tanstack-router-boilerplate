@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { cleanup, screen } from '@testing-library/react';
 
-import { renderWithRouter } from '~/utils';
+import { renderWithRouter } from '@test/utils';
 
 beforeEach(() => {
     vi.resetAllMocks();
