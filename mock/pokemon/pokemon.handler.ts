@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
-import { pokemonByIDMock, pokemonListMock } from './pokemon.mock';
+
+import { pokemonByIDMock, pokemonListMock } from '@mock/pokemon/pokemon.mock';
 
 export const pokemonListHandler = http.get('/api/v2/pokemon', async ({}) => {
     return HttpResponse.json(pokemonListMock);

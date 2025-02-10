@@ -37,8 +37,9 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),
-            '@test': path.resolve(__dirname, './test'),
             '@e2e': path.resolve(__dirname, './e2e'),
+            '@mock': path.resolve(__dirname, './mock'),
+            '@test': path.resolve(__dirname, './test'),
         },
     },
     server: {

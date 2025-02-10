@@ -1,7 +1,7 @@
 import { AuthError } from '@/errors/auth.error';
 import { delayFn } from '@/services/fetch/util';
 
-import { currentUserMock } from '@test/services/mocks/user/user.mock';
+import { currentUserMock } from '@mock/user/user.mock';
 
 export const getCurrentUser = async (
     throwError: boolean,

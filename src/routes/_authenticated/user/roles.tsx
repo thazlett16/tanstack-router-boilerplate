@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+
 import { useSuspenseQueryDeferred } from '@/hooks/use-suspense-query-deferred';
 import { userQueries } from '@/services/queries/user.query';
 

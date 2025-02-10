@@ -1,7 +1,8 @@
 import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 
 import { Button } from '@/components/base/button';
-import { useCreateUserMutation, useCreateUserMutationWithErrors } from '@/services/queries/user.query';
+import { useCreateUserMutation } from '@/services/mutations/new-user.mutation';
+import { useCreateUserMutationWithNavigation } from '@/services/mutations/new-user-with-navigation';
 
 export const Route = createFileRoute('/_authenticated/user/new-user')({
     component: RouteComponent,
@@ -11,7 +12,7 @@ function RouteComponent() {
     const navigate = useNavigate();
 
     const { mutate } = useCreateUserMutation();
-    const { mutate: mutateWithErrorsExample } = useCreateUserMutationWithErrors();
+    const { mutate: mutateWithNavigationExample } = useCreateUserMutationWithNavigation();
 
     return (
         <>
@@ -29,7 +30,7 @@ function RouteComponent() {
             <hr />
             <Button
                 onClick={() => {
-                    mutateWithErrorsExample(
+                    mutateWithNavigationExample(
                         {
                             throwError: false,
                             shouldNavigate: true,
