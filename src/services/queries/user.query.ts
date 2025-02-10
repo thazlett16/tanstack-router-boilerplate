@@ -20,18 +20,20 @@ export const userQueries = {
     },
 };
 
-export const getCurrentUserStatus = async (userPromise: Promise<TUser>) => {
+export const getCurrentUserStatus = async (userPromise: Promise<TUser>): Promise<TUserIsAuthenticated> => {
     return userPromise
         .then((currentUser) => {
             return {
                 isAuthenticated: true,
                 currentUser,
-            } satisfies TUserIsAuthenticated;
+            };
         })
         .catch((error) => {
+            console.error('User Error while fetching: ', error);
+
             return {
                 isAuthenticated: false,
-            } satisfies TUserIsAuthenticated;
+            };
         });
 };
 
@@ -55,16 +57,11 @@ export const useCreateUserMutation = () => {
 };
 
 export const useCreateUserMutationWithErrors = () => {
-    const queryClient = useQueryClient();
     const navigate = useNavigate();
 
     return useMutation({
         mutationFn: async ({
             throwError,
-            shouldNavigate,
-            shouldNavigateInMutate,
-            throwRedirect,
-            throwRedirectInMutate,
         }: {
             throwError: boolean;
             shouldNavigate: boolean;
