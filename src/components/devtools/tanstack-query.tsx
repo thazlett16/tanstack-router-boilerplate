@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 
 const TanStackQueryDevToolsLazy = lazy(() =>
-    import('@tanstack/react-query-devtools').then((devTool) => ({
+    import('@tanstack/react-query-devtools/production').then((devTool) => ({
         default: devTool.ReactQueryDevtools,
     })),
 );

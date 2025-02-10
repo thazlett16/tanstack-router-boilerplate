@@ -10,6 +10,8 @@ import { LocaleToggle } from '@/components/util/locale-toggle';
 import { ThemeToggle } from '@/components/util/theme-toggle';
 import { I18NProvider } from '@/providers/intl-provider';
 import { getCurrentUserStatus, userQueries } from '@/services/queries/user.query';
+import { useState } from 'react';
+import { Button } from '@/components/base/button';
 
 export const Route = createRootRouteWithContext<RouterContext>()({
     beforeLoad: async ({ context: { queryClient, currentLocale } }) => {
@@ -34,6 +36,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 });
 
 function RootComponent() {
+    const [showDevtools, setShowDevtools] = useState<boolean>(false);
+
     return (
         <I18NProvider>
             <TanStackLink
@@ -76,8 +80,15 @@ function RootComponent() {
             <ThemeToggle />
             <hr />
             <Outlet />
-            <TanStackRouterDevTools showDevtools={true} />
-            <TanStackQueryDevTools showDevtools={true} />
+            <Button
+                onClick={() => {
+                    setShowDevtools((prevState) => !prevState);
+                }}
+            >
+                Toggle Showing Devtools
+            </Button>
+            <TanStackRouterDevTools showDevtools={showDevtools} />
+            <TanStackQueryDevTools showDevtools={showDevtools} />
         </I18NProvider>
     );
 }
