@@ -29,8 +29,8 @@ export function createRouter() {
         // This way there isn't a flash of content on load.
         defaultPendingMinMs: 500,
         defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
-        defaultPendingComponent: () => <>Default Pending Component</>,
-        defaultNotFoundComponent: ({ data }) => <>Default Not Found Component</>,
+        defaultPendingComponent: () => <div>Default Pending Component</div>,
+        defaultNotFoundComponent: ({ data }) => <div>Default Not Found Component</div>,
     });
 
     return router;
