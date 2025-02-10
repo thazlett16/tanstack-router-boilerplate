@@ -16,7 +16,7 @@ export function useSuspenseQueryDeferred<
     TQueryKey extends QueryKey = QueryKey,
 >(
     { queryKey: rawQueryKey, ...options }: UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-    spinDelayOptions: Partial<typeof defaultOptions>,
+    spinDelayOptions?: Partial<typeof defaultOptions>,
 ) {
     const deepCompareQueryKey = useDeepCompareMemo(() => rawQueryKey, [rawQueryKey]);
 
