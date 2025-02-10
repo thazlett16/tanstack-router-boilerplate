@@ -1,4 +1,4 @@
-import path from 'node:path';
+import { resolve } from 'node:path';
 
 import { defineConfig } from 'vite';
 
@@ -7,6 +7,14 @@ import { default as tanStackRouterPluginVite } from 'vite-plugin-tanstack-react-
 import { default as reactPluginVite } from 'vite-plugin-react';
 
 export default defineConfig({
+    resolve: {
+        alias: {
+            '@': resolve(__dirname, './src'),
+            '@e2e': resolve(__dirname, './e2e'),
+            '@mock': resolve(__dirname, './mock'),
+            '@test': resolve(__dirname, './test'),
+        },
+    },
     build: {
         chunkSizeWarningLimit: 800,
     },
@@ -34,14 +42,6 @@ export default defineConfig({
             },
         }),
     ],
-    resolve: {
-        alias: {
-            '@': path.resolve(__dirname, './src'),
-            '@e2e': path.resolve(__dirname, './e2e'),
-            '@mock': path.resolve(__dirname, './mock'),
-            '@test': path.resolve(__dirname, './test'),
-        },
-    },
     server: {
         proxy: {
             '/api': {
