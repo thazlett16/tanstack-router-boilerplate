@@ -1,11 +1,11 @@
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createTranslator } from 'use-intl';
 
 import { getI18NQueryOptions } from '@/config/i18n';
 import type { RouterContext } from '@/config/tanstack-router';
 import { TanStackLink } from '@/components/custom/link';
+import { TanStackQueryDevTools } from '@/components/devtools/tanstack-query';
+import { TanStackRouterDevTools } from '@/components/devtools/tanstack-router';
 import { LocaleToggle } from '@/components/util/locale-toggle';
 import { ThemeToggle } from '@/components/util/theme-toggle';
 import { I18NProvider } from '@/providers/intl-provider';
@@ -76,15 +76,8 @@ function RootComponent() {
             <ThemeToggle />
             <hr />
             <Outlet />
-            <TanStackRouterDevtools
-                position="bottom-left"
-                initialIsOpen={false}
-            />
-            <ReactQueryDevtools
-                buttonPosition="bottom-right"
-                position="bottom"
-                initialIsOpen={false}
-            />
+            <TanStackRouterDevTools showDevtools={true} />
+            <TanStackQueryDevTools showDevtools={true} />
         </I18NProvider>
     );
 }

@@ -1,8 +1,7 @@
-import { queryOptions, useMutation, useQueryClient } from '@tanstack/react-query';
+import { queryOptions } from '@tanstack/react-query';
 
-import { createNewUser, getCurrentUser } from '@/services/fetch/user.fetch';
+import { getCurrentUser } from '@/services/fetch/user.fetch';
 import type { TUser, TUserIsAuthenticated } from '@/services/schemas/user.schema';
-import { redirect, useNavigate, useRouter } from '@tanstack/react-router';
 
 export const userQueries = {
     entity: () => ['user'] as const,
