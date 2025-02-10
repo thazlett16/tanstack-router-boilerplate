@@ -18,6 +18,13 @@ dist/
 .vinxi/
 .output/
 
+# Test Outputs
+coverage/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
 # Debug
 pnpm-debug.log*
 npm-debug.log*

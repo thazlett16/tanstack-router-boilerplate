@@ -8,7 +8,10 @@
         "moduleResolution": "Bundler",
         "baseUrl": ".",
         "paths": {
-            "@/*": ["./src/*"]
+            "@/*": ["./src/*"],
+            "@e2e/*": ["./e2e/*"],
+            "@mock/*": ["./mock/*"],
+            "@test/*": ["./test/*"]
         }
     }
 }
