@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { c } from '@/services/c';
+import { contract } from '@/services/contracts/contract';
 import {
     NamedAPIResourceListSchema,
     NamedAPIResourceQuerySchema,
@@ -8,7 +8,7 @@ import {
     PokemonSchema,
 } from '@/services/schemas/pokemon.schema';
 
-export const pokemonContract = c.router(
+export const pokemonContract = contract.router(
     {
         getPokemonList: {
             method: 'GET',
@@ -24,7 +24,7 @@ export const pokemonContract = c.router(
             pathParams: PokemonPathSchema,
             responses: {
                 200: PokemonSchema,
-                404: c.otherResponse({
+                404: contract.otherResponse({
                     contentType: 'text/plain',
                     body: z.string(),
                 }),

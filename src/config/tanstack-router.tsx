@@ -1,12 +1,8 @@
-import { type QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ErrorComponent, createRouter as createTanStackRouter, isRedirect } from '@tanstack/react-router';
-import { ZodError } from 'zod';
+import type { QueryClient } from '@tanstack/react-query';
+import { ErrorComponent, createRouter as createTanStackRouter } from '@tanstack/react-router';
 
 import { routeTree } from '@/route-tree.gen';
 import type { Locale } from '@/config/i18n';
-import { createQueryClient } from '@/config/tanstack-query';
-import { AuthError } from '@/services/errors/auth.error';
-import { DataError } from '@/services/errors/data.error';
 
 export interface RouterContext {
     queryClient: QueryClient;
@@ -14,12 +10,10 @@ export interface RouterContext {
 }
 
 export function createRouter() {
-    const queryClient = createQueryClient();
-
     const router = createTanStackRouter({
         routeTree,
         context: {
-            queryClient,
+            queryClient: null!,
             currentLocale: null!,
         },
         routeMasks: [],
@@ -27,77 +21,17 @@ export function createRouter() {
             strict: true,
         },
         defaultPreload: 'intent',
+        // This needs to be 0 as we are using @tanstack/query for data fetching
         defaultPreloadStaleTime: 0,
+        // This is the minimum amount of time it takes to show pending content.
+        defaultPendingMs: 500,
+        // This is the minimum amount of time that the pending component will be shown.
+        // This way there isn't a flash of content on load.
         defaultPendingMinMs: 500,
         defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
-        defaultPendingComponent: ({}) => <>Default Pending Component</>,
-        defaultNotFoundComponent: ({}) => <>Default Not Found Component</>,
-        Wrap: ({ children }) => {
-            return (
-                <>
-                    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-                </>
-            );
-        },
+        defaultPendingComponent: () => <div>Default Pending Component</div>,
+        defaultNotFoundComponent: ({ data }) => <div>Default Not Found Component</div>,
     });
-
-    queryClient.getQueryCache().config.onError = async (error, query) => {
-        if (isRedirect(error)) {
-            await router.navigate(
-                router.resolveRedirect({
-                    ...error,
-                    _fromLocation: router.state.location,
-                }),
-            );
-            return;
-        }
-
-        if (error instanceof ZodError) {
-            // TODO onError: ZodError', error
-            return;
-        }
-
-        if (error instanceof AuthError) {
-            // TODO onError: AuthError', error
-            return;
-        }
-
-        if (error instanceof DataError) {
-            // TODO onError: DataError', error
-            return;
-        }
-
-        // TODO onError: OTHER', error
-    };
-
-    queryClient.getMutationCache().config.onError = async (error) => {
-        if (isRedirect(error)) {
-            await router.navigate(
-                router.resolveRedirect({
-                    ...error,
-                    _fromLocation: router.state.location,
-                }),
-            );
-            return;
-        }
-
-        if (error instanceof ZodError) {
-            // TODO onError: ZodError', error
-            return;
-        }
-
-        if (error instanceof AuthError) {
-            // TODO onError: AuthError', error
-            return;
-        }
-
-        if (error instanceof DataError) {
-            // TODO onError: DataError', error
-            return;
-        }
-
-        // TODO onError: OTHER', error
-    };
 
     return router;
 }

@@ -1,24 +1,26 @@
-import type { PropsWithChildren } from 'react';
-import {
-    Link,
-    Outlet,
-    createRootRouteWithContext,
-} from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
+import { createTranslator } from 'use-intl';
 
+import { getI18NQueryOptions } from '@/config/i18n';
 import type { RouterContext } from '@/config/tanstack-router';
-import { getI18NQueryOptions, useI18NSuspenseQuery } from '@/config/i18n';
-import { createTranslator, IntlProvider } from 'use-intl';
-import { useCurrentLocale } from '@/hooks/use-current-locale';
+import { TanStackLink } from '@/components/custom/link';
+import { TanStackQueryDevTools } from '@/components/devtools/tanstack-query';
+import { TanStackRouterDevTools } from '@/components/devtools/tanstack-router';
 import { LocaleToggle } from '@/components/util/locale-toggle';
 import { ThemeToggle } from '@/components/util/theme-toggle';
+import { I18NProvider } from '@/providers/intl-provider';
+import { getCurrentUserStatus, userQueries } from '@/services/queries/user.query';
+import { useState } from 'react';
+import { Button } from '@/components/base/button';
 
 export const Route = createRootRouteWithContext<RouterContext>()({
     beforeLoad: async ({ context: { queryClient, currentLocale } }) => {
-        const messages = await queryClient.ensureQueryData(
-            getI18NQueryOptions(currentLocale),
+        const messagesPromise = queryClient.ensureQueryData(getI18NQueryOptions(currentLocale));
+        const currentUserStatusPromise = getCurrentUserStatus(
+            queryClient.ensureQueryData(userQueries.meQueryOptions(false)),
         );
+
+        const [messages, currentUserStatus] = await Promise.all([messagesPromise, currentUserStatusPromise]);
 
         const translator = createTranslator({
             locale: currentLocale,
@@ -27,51 +29,66 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
         return {
             translator,
+            currentUserStatus,
         };
     },
     component: RootComponent,
 });
 
-const DocumentIntlProvider = ({ children }: PropsWithChildren) => {
-    const { currentLocale } = useCurrentLocale();
-    const { data: messages } = useI18NSuspenseQuery(currentLocale);
-
-    return (
-        <IntlProvider
-            locale={currentLocale}
-            messages={messages}
-        >
-            {children}
-        </IntlProvider>
-    );
-};
-
 function RootComponent() {
+    const [showDevtools, setShowDevtools] = useState<boolean>(false);
+
     return (
-        <DocumentIntlProvider>
-            <Link
+        <I18NProvider>
+            <TanStackLink
                 to="/"
-                activeOptions={{ exact: true }}
+                variant="link"
+            >
+                Index
+            </TanStackLink>
+            <hr />
+            <TanStackLink
+                to="/about"
+                variant="link"
+            >
+                About
+            </TanStackLink>
+            <hr />
+            <TanStackLink
+                to="/pokemon"
+                variant="link"
+            >
+                Pokemon
+            </TanStackLink>
+            <hr />
+            <TanStackLink
+                to="/home"
+                variant="link"
             >
                 Home
-            </Link>
+            </TanStackLink>
             <hr />
-            <Link to="/pokemon">Pokemon</Link>
+            <TanStackLink
+                to="/sign-in"
+                variant="link"
+            >
+                Sign In
+            </TanStackLink>
             <hr />
             <LocaleToggle />
             <hr />
             <ThemeToggle />
             <hr />
             <Outlet />
-            <TanStackRouterDevtools
-                position="bottom-left"
-                initialIsOpen={false}
-            />
-            <ReactQueryDevtools
-                buttonPosition="bottom-right"
-                position="bottom"
-                initialIsOpen={false}
-            />
-        </DocumentIntlProvider>
+            <Button
+                onClick={() => {
+                    setShowDevtools((prevState) => !prevState);
+                }}
+            >
+                Toggle Showing Devtools
+            </Button>
+            <TanStackRouterDevTools showDevtools={showDevtools} />
+            <TanStackQueryDevTools showDevtools={showDevtools} />
+        </I18NProvider>
     );
 }
