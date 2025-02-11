@@ -9,14 +9,20 @@ export const Route = createFileRoute('/_authenticated/user/name')({
 
 function RouteComponent() {
     const {
-        data: { roles },
+        data: { firstName, lastName },
     } = useSuspenseQueryDeferred(userQueries.meQueryOptions(false));
 
     return (
         <>
             <div>Hello "/_authenticated/user/name"!</div>
             <hr />
-            <pre>{JSON.stringify(roles, null, 2)}</pre>
+            <h1>
+                First Name: <i>{firstName}</i>
+            </h1>
+            <hr />
+            <h1>
+                Last Name: <i>{lastName}</i>
+            </h1>
         </>
     );
 }
